@@ -243,3 +243,4 @@ function check_download_software()
 #init_install 2>&1 | tee /root/as-init-install.log
 #check_download_software 2>&1 | tee /root/as-download-software.log
 #InstallVim74 2>&1 | tee /root/as-vim-install.log
+#install_mysql 2>&1 | tee /root/as-mysql-install.log
