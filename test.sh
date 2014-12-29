@@ -39,13 +39,6 @@ function InstallVim74()
 	echo "==========================="
     #用户根目录
     user_dir='/home/'$username
-    cd $soft_dir
-    #下载vim7.4
-    if [ -s "$soft_dir/vim-7.4.tar.bz2" ]; then
-        echo 'vim-7.4.tar.bz2[found]'
-    else
-        wget -c 'ftp://ftp.vim.org/pub/vim/unix/vim-7.4.tar.bz2' 
-    fi
 
 echo "============================Install VIM7.4=================================="
 cd $soft_dir
@@ -64,11 +57,6 @@ cp ${conf_dir}/vim/.vimrc ${user_dir}/
 
 echo "Install NERD_TREE For VIM7.4"
 cd $soft_dir
-if [ -s "$soft_dir/nerdtree.zip" ]; then
-    echo 'nerdtree.zip[found]'
-else
-    wget -c 'http://www.vim.org/scripts/download_script.php?src_id=17123' -O nerdtree.zip
-fi
 unzip -q nerdtree.zip
 #root的nerdtree插件目录
 mkdir -p /root/.vim/plugin
@@ -88,7 +76,7 @@ echo "Install VIM7.4 Finished"
 
 }
 
-function InitInstall()
+function init_install()
 {
     #show CentOS版本
 	cat /etc/issue
@@ -114,6 +102,26 @@ function InitInstall()
 	do yum -y install $packages; done
 }
 
+function check_download_software()
+{
+    clear
+    cd $soft_dir
+    #下载vim7.4
+    if [ -s "$soft_dir/vim-7.4.tar.bz2" ]; then
+        echo 'vim-7.4.tar.bz2[found]'
+    else
+        wget -c 'ftp://ftp.vim.org/pub/vim/unix/vim-7.4.tar.bz2' 
+    fi
+    #download nerdtree
+    if [ -s "$soft_dir/nerdtree.zip" ]; then
+        echo 'nerdtree.zip[found]'
+    else
+        wget -c 'http://www.vim.org/scripts/download_script.php?src_id=17123' -O nerdtree.zip
+    fi
+
+}
+
 #excute
-#InitInstall 2>&1 | tee /root/as-init-install.log
-#InstallVim74 2>&1 | tee /root/as-vim-install.log
+#init_install 2>&1 | tee /root/as-init-install.log
+check_download_software 2>&1 | tee /root/as-download-software.log
+InstallVim74 2>&1 | tee /root/as-vim-install.log
