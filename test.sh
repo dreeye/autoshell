@@ -12,13 +12,75 @@ clear
 echo "========================================================================="
 echo "PNshell for CentOS/RadHat Linux Server, Written by ProNoz"
 echo "========================================================================="
+#shell dir
 shell_dir=$(pwd)
-# software dir
 if [ ! -d "${shell_dir}/software" ]; then
     mkdir $shell_dir'/software'
 fi
+# software dir
 soft_dir=$shell_dir'/software'
+# conf dir
 conf_dir=$shell_dir'/conf'
+
+
+function install_nginx()
+{
+echo "============================Install Nginx================================="
+groupadd www
+useradd -s /sbin/nologin -g www www
+cd $soft_dir
+tar zxf pcre-8.12.tar.gz
+cd pcre-8.12/
+./configure
+make && make install
+cd ../
+
+ldconfig
+
+tar zxf nginx-1.6.2.tar.gz
+cd nginx-1.6.2/
+./configure --user=www --group=www --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-ipv6 --with-pcre=${soft_dir}/pcre-8.12
+make && make install
+cd ../
+
+ln -s /usr/local/nginx/sbin/nginx /usr/bin/nginx
+rm -f /usr/local/nginx/conf/nginx.conf
+cd $conf_dir
+cp nginx/nginx.conf /usr/local/nginx/conf/nginx.conf
+
+#www项目目录创建
+mkdir -p /usr/local/webserver/htdocs/pronoz
+chmod +w /usr/local/webserver/htdocs/pronoz     
+chown -R www:www /usr/local/webserver/htdocs/pronoz
+#vhost
+cd $conf_dir
+mkdir  /usr/local/nginx/conf/vhost
+cp nginx/vhost_www.pronoz.cc.conf /usr/local/nginx/conf/vhost/
+chmod +w /usr/local/nginx/conf/vhost
+chown -R www:www /usr/local/nginx/conf/vhost
+#logs dir
+chmod +w /usr/local/nginx/logs/      
+chown -R www:www /usr/local/nginx/logs/
+#startup
+sed -i '$a /usr/local/nginx/sbin/nginx' /etc/rc.local
+#iptables port 80 rules
+if [ -s /sbin/iptables ]; then
+/sbin/iptables -I INPUT -p tcp --dport 80 -j ACCEPT
+/etc/rc.d/init.d/iptables save
+/etc/rc.d/init.d/iptables restart
+fi
+
+}
+
+
+
+
+
+
+
+
+
+
 
 function InstallVim74()
 {
@@ -110,18 +172,34 @@ function check_download_software()
     if [ -s "$soft_dir/vim-7.4.tar.bz2" ]; then
         echo 'vim-7.4.tar.bz2[found]'
     else
+        echo 'Downloading vim-7.4.tar.bz2'
         wget -c 'http://ftp.vim.org/vim/unix/vim-7.4.tar.bz2' 
     fi
     #download nerdtree
     if [ -s "$soft_dir/nerdtree.zip" ]; then
         echo 'nerdtree.zip[found]'
     else
+        echo 'Downloading nerdtree.zip'
         wget -c 'http://www.vim.org/scripts/download_script.php?src_id=17123' -O nerdtree.zip
+    fi
+    #download pcre
+    if [ -s "$soft_dir/pcre-8.12.tar.gz" ]; then
+        echo 'pcre-8.12.tar.gz[found]'
+    else
+        echo 'Downloading pcre-8.12.tar.gz'
+        wget -c 'http://downloads.sourceforge.net/project/pcre/pcre/8.12/pcre-8.12.tar.gz'
+    fi
+    #download nginx
+    if [ -s "$soft_dir/nginx-1.6.2.tar.gz" ]; then
+        echo 'nginx-1.6.2.tar.gz[found]'
+    else
+        echo 'Downloading nginx-1.6.2.tar.gz'
+        wget -c 'http://nginx.org/download/nginx-1.6.2.tar.gz'
     fi
 
 }
 
 #excute
 #init_install 2>&1 | tee /root/as-init-install.log
-check_download_software 2>&1 | tee /root/as-download-software.log
+#check_download_software 2>&1 | tee /root/as-download-software.log
 #InstallVim74 2>&1 | tee /root/as-vim-install.log
