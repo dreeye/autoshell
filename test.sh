@@ -110,7 +110,7 @@ function check_download_software()
     if [ -s "$soft_dir/vim-7.4.tar.bz2" ]; then
         echo 'vim-7.4.tar.bz2[found]'
     else
-        wget -c 'ftp://ftp.vim.org/pub/vim/unix/vim-7.4.tar.bz2' 
+        wget -c 'http://ftp.vim.org/vim/unix/vim-7.4.tar.bz2' 
     fi
     #download nerdtree
     if [ -s "$soft_dir/nerdtree.zip" ]; then
@@ -124,4 +124,4 @@ function check_download_software()
 #excute
 #init_install 2>&1 | tee /root/as-init-install.log
 check_download_software 2>&1 | tee /root/as-download-software.log
-InstallVim74 2>&1 | tee /root/as-vim-install.log
+#InstallVim74 2>&1 | tee /root/as-vim-install.log
