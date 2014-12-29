@@ -25,6 +25,178 @@ fi
 soft_dir=$shell_dir'/software'
 # conf dir
 conf_dir=$shell_dir'/conf'
+# choose your username by vim
+username="willis"
+echo "Please input the username for vim:"
+read -p "(Default User: willis):" username
+
+function install_php()
+{
+echo "============================Install PHP 5.3.28================================"
+cd $soft_dir
+export PHP_AUTOCONF=/usr/local/autoconf-2.13/bin/autoconf
+export PHP_AUTOHEADER=/usr/local/autoconf-2.13/bin/autoheader
+tar zxf php-5.3.28.tar.gz
+cd php-5.3.28/
+./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-magic-quotes --enable-safe-mode --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --without-pear --with-gettext --disable-fileinfo
+
+make ZEND_EXTRA_LIBS='-liconv'
+make install
+
+rm -f /usr/bin/php
+ln -s /usr/local/php/bin/php /usr/bin/php
+ln -s /usr/local/php/bin/phpize /usr/bin/phpize
+ln -s /usr/local/php/sbin/php-fpm /usr/bin/php-fpm
+
+echo "Copy new php configure file."
+mkdir -p /usr/local/php/etc
+cp php.ini-production /usr/local/php/etc/php.ini
+
+cd $soft_dir
+# php extensions
+echo "Modify php.ini......"
+sed -i 's/post_max_size = 8M/post_max_size = 50M/g' /usr/local/php/etc/php.ini
+sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 50M/g' /usr/local/php/etc/php.ini
+sed -i 's/;date.timezone =/date.timezone = PRC/g' /usr/local/php/etc/php.ini
+sed -i 's/short_open_tag = Off/short_open_tag = On/g' /usr/local/php/etc/php.ini
+sed -i 's/; cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /usr/local/php/etc/php.ini
+sed -i 's/; cgi.fix_pathinfo=0/cgi.fix_pathinfo=0/g' /usr/local/php/etc/php.ini
+sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /usr/local/php/etc/php.ini
+sed -i 's/max_execution_time = 30/max_execution_time = 300/g' /usr/local/php/etc/php.ini
+sed -i 's/register_long_arrays = On/;register_long_arrays = On/g' /usr/local/php/etc/php.ini
+sed -i 's/magic_quotes_gpc = On/;magic_quotes_gpc = On/g' /usr/local/php/etc/php.ini
+sed -i 's/disable_functions =.*/disable_functions = passthru,exec,system,chroot,scandir,chgrp,chown,shell_exec,proc_open,proc_get_status,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru,stream_socket_server/g' /usr/local/php/etc/php.ini
+
+
+echo "Creating new php-fpm configure file......"
+cat >/usr/local/php/etc/php-fpm.conf<<EOF
+[global]
+pid = /usr/local/php/var/run/php-fpm.pid
+error_log = /usr/local/php/var/log/php-fpm.log
+log_level = notice
+
+[www]
+listen = /tmp/php-cgi.sock
+listen.backlog = -1
+listen.allowed_clients = 127.0.0.1
+listen.owner = www
+listen.group = www
+listen.mode = 0666
+user = www
+group = www
+pm = dynamic
+pm.max_children = 10
+pm.start_servers = 2
+pm.min_spare_servers = 1
+pm.max_spare_servers = 6
+request_terminate_timeout = 100
+request_slowlog_timeout = 0
+slowlog = var/log/slow.log
+EOF
+
+#echo "Copy php-fpm init.d file......"
+#cp $soft_dir/php-5.3.28/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
+#chmod +x /etc/init.d/php-fpm
+#
+#cp $soft_dir/lnmp /root/lnmp
+#chmod +x /root/lnmp
+#sed -i 's:/usr/local/php/logs:/usr/local/php/var/run:g' /root/lnmp
+echo "============================PHP 5.3.28 install completed======================"
+}
+
+function install_depend()
+{
+echo "============================Install Depend================================="
+cd $soft_dir
+tar zxf autoconf-2.13.tar.gz
+cd autoconf-2.13/
+./configure --prefix=/usr/local/autoconf-2.13
+make && make install
+cd ../
+
+tar zxf libiconv-1.14.tar.gz
+cd libiconv-1.14/
+./configure
+make && make install
+cd ../
+
+cd $soft_dir
+tar zxf libmcrypt-2.5.8.tar.gz
+cd libmcrypt-2.5.8/
+./configure
+make && make install
+/sbin/ldconfig
+cd libltdl/
+./configure --enable-ltdl-install
+make && make install
+cd ../../
+
+cd $soft_dir
+tar zxf mhash-0.9.9.9.tar.gz
+cd mhash-0.9.9.9/
+./configure
+make && make install
+cd ../
+
+ln -s /usr/local/lib/libmcrypt.la /usr/lib/libmcrypt.la
+ln -s /usr/local/lib/libmcrypt.so /usr/lib/libmcrypt.so
+ln -s /usr/local/lib/libmcrypt.so.4 /usr/lib/libmcrypt.so.4
+ln -s /usr/local/lib/libmcrypt.so.4.4.8 /usr/lib/libmcrypt.so.4.4.8
+ln -s /usr/local/lib/libmhash.a /usr/lib/libmhash.a
+ln -s /usr/local/lib/libmhash.la /usr/lib/libmhash.la
+ln -s /usr/local/lib/libmhash.so /usr/lib/libmhash.so
+ln -s /usr/local/lib/libmhash.so.2 /usr/lib/libmhash.so.2
+ln -s /usr/local/lib/libmhash.so.2.0.1 /usr/lib/libmhash.so.2.0.1
+
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+
+cd $soft_dir
+tar zxf mcrypt-2.6.8.tar.gz
+cd mcrypt-2.6.8/
+./configure
+make && make install
+cd ../
+
+if [ `getconf WORD_BIT` = '32' ] && [ `getconf LONG_BIT` = '64' ] ; then
+	ln -s /usr/lib64/libpng.* /usr/lib/
+	ln -s /usr/lib64/libjpeg.* /usr/lib/
+fi
+
+ulimit -v unlimited
+
+if [ ! `grep -l "/lib"    '/etc/ld.so.conf'` ]; then
+	echo "/lib" >> /etc/ld.so.conf
+fi
+
+if [ ! `grep -l '/usr/lib'    '/etc/ld.so.conf'` ]; then
+	echo "/usr/lib" >> /etc/ld.so.conf
+fi
+
+if [ -d "/usr/lib64" ] && [ ! `grep -l '/usr/lib64'    '/etc/ld.so.conf'` ]; then
+	echo "/usr/lib64" >> /etc/ld.so.conf
+fi
+
+if [ ! `grep -l '/usr/local/lib'    '/etc/ld.so.conf'` ]; then
+	echo "/usr/local/lib" >> /etc/ld.so.conf
+fi
+
+ldconfig
+
+cat >>/etc/security/limits.conf<<eof
+* soft nproc 65535
+* hard nproc 65535
+* soft nofile 65535
+* hard nofile 65535
+eof
+
+echo "fs.file-max=65535" >> /etc/sysctl.conf
+
+echo "============================Install Depend complied================================="
+}
+
+
+
+
 
 function install_mysql()
 {
@@ -122,9 +294,6 @@ function InstallVim74()
 {
 	echo "==========================="
     #指定vim的用户
-	username="willis"
-	echo "Please input the username for vim:"
-	read -p "(Default User: willis):" username
 	if [ "$username" = "" ]; then
 		username="willis"
 	fi
@@ -196,7 +365,7 @@ function init_install()
 	sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 	fi
 
-	for packages in gcc gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers zip unzip man perl-CPAN cmake bison wget mlocate git openssh-server openssh-clients;
+	for packages in gcc gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers zip unzip man perl-CPAN cmake bison wget mlocate git openssh-server openssh-clients patch make gcc-g77 flex file libtool libtool-libs kernel-devel libpng10 libpng10-devel gd gd-devel libevent libevent-devel fonts-chinese gettext gettext-devel gmp-devel pspell-devel libcap diffutils;
 	do yum -y install $packages; done
 }
 
@@ -239,6 +408,53 @@ function check_download_software()
         echo 'Downloading mysql-5.6.12.tar.gz'
         wget -c 'http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.12.tar.gz'
     fi
+    #autoconf
+    if [ -s "$soft_dir/autoconf-2.13.tar.gz" ]; then
+        echo 'autoconf-2.13.tar.gz[found]'
+    else
+        echo 'Downloading autoconf-2.13.tar.gz'
+        wget -c 'http://ftp.gnu.org/gnu/autoconf/autoconf-2.13.tar.gz'
+    fi
+    #libiconv
+    if [ -s "$soft_dir/libiconv-1.14.tar.gz" ]; then
+        echo 'libiconv-1.14.tar.gz[found]'
+    else
+        echo 'Downloading libiconv-1.14.tar.gz'
+        wget -c 'http://ftp.gnu.org/gnu/libiconv/libiconv-1.14.tar.gz'
+    fi
+    #mhash
+    if [ -s "$soft_dir/mhash-0.9.9.9.tar.gz" ]; then
+        echo 'mhash-0.9.9.9.tar.gz[found]'
+    else
+        echo 'Downloading mhash-0.9.9.9.tar.gz'
+        wget -c 'http://downloads.sourceforge.net/mhash/mhash-0.9.9.9.tar.gz'
+    fi
+    #libmcrypt
+    if [ -s "$soft_dir/libmcrypt-2.5.8.tar.gz" ]; then
+        echo 'libmcrypt-2.5.8.tar.gz[found]'
+    else
+        echo 'Downloading libmcrypt-2.5.8.tar.gz'
+        wget -c 'http://downloads.sourceforge.net/mcrypt/libmcrypt-2.5.8.tar.gz'
+    fi
+    #mcrypt
+    if [ -s "$soft_dir/mcrypt-2.6.8.tar.gz" ]; then
+        echo 'mcrypt-2.6.8.tar.gz[found]'
+    else
+        echo 'Downloading mcrypt-2.6.8.tar.gz'
+        wget -c 'http://downloads.sourceforge.net/mcrypt/mcrypt-2.6.8.tar.gz'
+    fi
+    if [ -s "$soft_dir/php-5.3.28.tar.gz" ]; then
+        echo 'php-5.3.28.tar.gz[found]'
+    else
+        echo 'Downloading php-5.3.28.tar.gz' 
+        wget -c 'http://cn2.php.net/get/php-5.3.28.tar.gz/from/this/mirror' -O php-5.3.28.tar.gz
+    fi
+#    if [ -s "$soft_dir/" ]; then
+#        echo '[found]'
+#    else
+#        echo 'Downloading ' 
+#        wget -c ''
+#    fi
     
 
 }
@@ -248,3 +464,5 @@ function check_download_software()
 #check_download_software 2>&1 | tee /root/as-download-software.log
 #InstallVim74 2>&1 | tee /root/as-vim-install.log
 #install_mysql 2>&1 | tee /root/as-mysql-install.log
+#install_depend 2>&1 | tee /root/as-depend.log
+#install_php 2>&1 | tee /root/as-php.log
