@@ -67,7 +67,7 @@ cd $soft_dir
 if [ -s "$soft_dir/nerdtree.zip" ]; then
     echo 'nerdtree.zip[found]'
 else
-    wget -c 'http://www.vim.org/scripts/download_script.php?src_id=17123 -O nerdtree.zip' 
+    wget -c 'http://www.vim.org/scripts/download_script.php?src_id=17123' -O nerdtree.zip
 fi
 unzip -q nerdtree.zip
 #root的nerdtree插件目录
