@@ -14,6 +14,10 @@ echo "PNshell for CentOS6.6 Linux Server, Written by ProNoz"
 echo "========================================================================="
 #shell dir
 shell_dir=$(pwd)
+if [ ! -d "conf" ]; then
+    echo 'please cd PNshell dir'
+    exit 0
+fi
 if [ ! -d "${shell_dir}/software" ]; then
     mkdir $shell_dir'/software'
 fi
