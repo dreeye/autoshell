@@ -10,7 +10,7 @@ fi
 
 clear
 echo "========================================================================="
-echo "PNshell for CentOS/RadHat Linux Server, Written by ProNoz"
+echo "PNshell for CentOS6.6 Linux Server, Written by ProNoz"
 echo "========================================================================="
 #shell dir
 shell_dir=$(pwd)
@@ -21,6 +21,48 @@ fi
 soft_dir=$shell_dir'/software'
 # conf dir
 conf_dir=$shell_dir'/conf'
+
+function install_mysql()
+{
+echo "============================Install Mysql-5.6.12================================="
+cd $soft_dir
+groupadd mysql
+useradd -s /sbin/nologin -M -g mysql mysql
+tar zxf mysql-5.6.12.tar.gz
+cd mysql-5.6.12/
+cmake . -DCMAKE_INSTALL_PREFIX=/usr/local/mysql/ -DEXTRA_CHARSETS=all -DWITH_READLINE=1 -DWITH_SSL=yes -DWITH_EMBEDDED_SERVER=1 -DENABLED_LOCAL_INFILE=1 -DWITH_INNOBASE_STORAGE_ENGINE=1 -DWITH_PARTITION_STORAGE_ENGINE=1
+make && make install
+cd ../
+
+#database dir
+mkdir -p /usr/local/mysql/3306/data/
+mkdir -p /usr/local/mysql/3306/binlog/
+mkdir -p /usr/local/mysql/3306/relaylog/
+
+chmod +w /usr/local/mysql
+chown -R mysql:mysql /usr/local/mysql
+cd /usr/local/mysql
+#以mysql用户帐号的身份建立数据表
+scripts/mysql_install_db --basedir=/usr/local/mysql --datadir=/usr/local/mysql/3306/data --user=mysql 
+cd $conf_dir
+#mysql conf 
+cp mysql/my.cnf /usr/local/mysql/3306/my.cnf
+#mysql control shell 
+cp mysql/mysql /usr/local/mysql/3306/mysql
+chmod +x /usr/local/mysql/3306/mysql
+ln -s /usr/local/mysql/bin/mysql /usr/bin/mysql
+ln -s /usr/local/mysql/bin/mysqldump /usr/bin/mysqldump
+ln -s /usr/local/mysql/bin/myisamchk /usr/bin/myisamchk
+ln -s /usr/local/mysql/bin/mysqld_safe /usr/bin/mysqld_safe
+echo "============================Install Mysql-5.6.12 Finished================================="
+}
+
+
+
+
+
+
+
 
 
 function install_nginx()
@@ -71,16 +113,6 @@ if [ -s /sbin/iptables ]; then
 fi
 
 }
-
-
-
-
-
-
-
-
-
-
 
 function InstallVim74()
 {
@@ -196,6 +228,14 @@ function check_download_software()
         echo 'Downloading nginx-1.6.2.tar.gz'
         wget -c 'http://nginx.org/download/nginx-1.6.2.tar.gz'
     fi
+    #download mysql5.6.12
+    if [ -s "$soft_dir/mysql-5.6.12.tar.gz" ]; then
+        echo 'mysql-5.6.12.tar.gz[found]'
+    else
+        echo 'Downloading mysql-5.6.12.tar.gz'
+        wget -c 'http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.12.tar.gz'
+    fi
+    
 
 }
 
