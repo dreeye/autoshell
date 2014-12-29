@@ -39,11 +39,11 @@ function InstallVim74()
 	echo "==========================="
     #用户根目录
     user_dir='/home/'$username
+    cd $soft_dir
     #下载vim7.4
     if [ -s "$soft_dir/vim-7.4.tar.bz2" ]; then
         echo 'vim-7.4.tar.bz2[found]'
     else
-        cd $soft_dir
         wget -c 'ftp://ftp.vim.org/pub/vim/unix/vim-7.4.tar.bz2' 
     fi
 
@@ -62,21 +62,29 @@ cp ${conf_dir}/vim/.vimrc /root
 cp ${conf_dir}/vim/.vimrc ${user_dir}/
 
 
-echo "============================Install NERD_TREE For VIM7.4=================================="
+echo "Install NERD_TREE For VIM7.4"
 cd $soft_dir
+if [ -s "$soft_dir/nerdtree.zip" ]; then
+    echo 'nerdtree.zip[found]'
+else
+    wget -c 'http://www.vim.org/scripts/download_script.php?src_id=17123 -O nerdtree.zip' 
+fi
 unzip -q nerdtree.zip
+#root的nerdtree插件目录
 mkdir -p /root/.vim/plugin
 mkdir -p /root/.vim/doc
 cp -p plugin/NERD_tree.vim /root/.vim/plugin
 cp -p doc/NERD_tree.txt /root/.vim/doc
+#新建账号的nerdtree插件目录
 mkdir -p ${user_dir}/.vim/plugin
 mkdir -p ${user_dir}/.vim/doc
 cp -p plugin/NERD_tree.vim ${user_dir}/.vim/plugin
 cp -p doc/NERD_tree.txt ${user_dir}/.vim/doc
 cd ${user_dir}/
+#修改新建账号权限
 chown $username:$username .vimrc
 chown -R $username:$username .vim
-echo "============================Install VIM7.4 Finished=================================="
+echo "Install VIM7.4 Finished"
 
 }
 
