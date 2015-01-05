@@ -30,6 +30,85 @@ username="willis"
 echo "Please input the username for vim:"
 read -p "(Default User: willis):" username
 
+#memcached eaccelerator imMagick
+function install_php_ext()
+{
+echo "============================Install php ext================================"
+#memcached
+cd $soft_dir
+tar zxf libmemcached-1.0.18.tar.gz
+cd libmemcached-1.0.18
+./configure --prefix=/usr/local/libmemcached
+make && make install
+cd ../
+tar zxf memcached-2.2.0.tgz
+cd memcached-2.2.0
+/usr/local/php/bin/phpize
+./configure --with-php-config=/usr/local/php/bin/php-config --with-libmemcached-dir=/usr/local/libmemcached/
+make && make install
+cd ../
+echo "Modify php.ini......"
+echo "Add memcached.so"
+sed -i '/; extension_dir = "ext"/a\extension = "memcached.so"' /usr/local/php/etc/php.ini
+#eaccelerator
+cd $soft_dir
+tar jxf eaccelerator-0.9.6.1.tar.bz2
+cd eaccelerator-0.9.6.1/ 
+/usr/local/php/bin/phpize
+./configure --enable-eaccelerator=shared  --with-php-config=/usr/local/php/bin/php-config
+make && make install
+cd ../
+echo "mkdir eaccelerator_cache dir"
+mkdir -p  /usr/local/eaccelerator_cache
+cd $soft_dir
+cat >ea.ini<<EOF
+[eaccelerator]
+zend_extension="/usr/local/php/lib/php/extensions/no-debug-non-zts-20090626/eaccelerator.so"
+eaccelerator.shm_size="64"      
+eaccelerator.cache_dir="/usr/local/eaccelerator_cache"
+eaccelerator.enable="1"      
+eaccelerator.optimizer="1"      
+eaccelerator.check_mtime="1"      
+eaccelerator.debug="0"      
+eaccelerator.filter=""      
+eaccelerator.shm_max="0"      
+eaccelerator.shm_ttl="3600"      
+eaccelerator.shm_prune_period="3600"      
+eaccelerator.shm_only="0"      
+eaccelerator.compress="1"      
+eaccelerator.compress_level="9"
+EOF
+
+sed -i '$ r ea.ini' /usr/local/php/etc/php.ini
+
+rm -f ea.ini
+
+#imMagick
+cd $soft_dir
+tar zxf ImageMagick-6.5.1-2.tar.bz2
+cd ImageMagick-6.5.1-2/ 
+./configure --prefix=/usr/local/phplibs/ImageMagick
+make && make install
+cd ../
+
+tar zxf imagick-2.3.0.tgz
+cd imagick-2.3.0/
+/usr/local/php/bin/phpize
+export PKG_CONFIG_PATH = /usr/local/phplibs/ImageMagick/lib/pkgconfig/ 
+./configure  --with-php-config=/usr/local/php/bin/php-config  --with-imagick=/usr/local/phplibs/ImageMagick/ 
+make && make install
+cd ../
+echo "Modify php.ini......"
+echo "Add imagick.so"
+sed -i '/; extension_dir = "ext"/a\extension = "imagick.so"' /usr/local/php/etc/php.ini
+echo "============================Install php ext finished================================"
+
+}
+
+
+
+
+
 function install_php()
 {
 echo "============================Install PHP 5.3.28================================"
@@ -443,12 +522,48 @@ function check_download_software()
         echo 'Downloading mcrypt-2.6.8.tar.gz'
         wget -c 'http://downloads.sourceforge.net/mcrypt/mcrypt-2.6.8.tar.gz'
     fi
+    #php
     if [ -s "$soft_dir/php-5.3.28.tar.gz" ]; then
         echo 'php-5.3.28.tar.gz[found]'
     else
         echo 'Downloading php-5.3.28.tar.gz' 
         wget -c 'http://cn2.php.net/get/php-5.3.28.tar.gz/from/this/mirror' -O php-5.3.28.tar.gz
     fi
+    #memcached php
+    if [ -s "$soft_dir/libmemcached-1.0.18.tar.gz" ]; then
+        echo 'libmemcached-1.0.18.tar.gz[found]'
+    else
+        echo 'Downloading libmemcached-1.0.18.tar.gz' 
+        wget -c 'https://launchpad.net/libmemcached/1.0/1.0.18/+download/libmemcached-1.0.18.tar.gz'
+    fi
+    if [ -s "$soft_dir/memcached-2.2.0" ]; then
+        echo 'memcached-2.2.0[found]'
+    else
+        echo 'Downloading memcached-2.2.0' 
+        wget -c 'http://pecl.php.net/get/memcached-2.2.0.tgz'
+    fi
+    #eacc
+    if [ -s "$soft_dir/eaccelerator-0.9.6.1.tar.bz2" ]; then
+        echo 'eaccelerator-0.9.6.1.tar.bz2[found]'
+    else
+        echo 'Downloading eaccelerator-0.9.6.1.tar.bz2' 
+        wget -c 'http://jaist.dl.sourceforge.net/project/eaccelerator/eaccelerator/eAccelerator%200.9.6.1/eaccelerator-0.9.6.1.tar.bz2'
+    fi
+    #imMagick
+    if [ -s "$soft_dir/ImageMagick-6.5.1-2.tar.bz2" ]; then
+        echo 'ImageMagick-6.5.1-2.tar.bz2[found]'
+    else
+        echo 'Downloading ImageMagick-6.5.1-2.tar.bz2' 
+        wget -c 'http://blog.zyan.cc/soft/linux/nginx_php/imagick/ImageMagick.tar.gz' -O ImageMagick-6.5.1-2.tar.bz2
+    fi
+    #imagick-2.3.0.tgz 
+    if [ -s "$soft_dir/imagick-2.3.0.tgz" ]; then
+        echo 'imagick-2.3.0.tgz[found]'
+    else
+        echo 'Downloading imagick-2.3.0.tgz' 
+        wget -c 'http://pecl.php.net/get/imagick-2.3.0.tgz'
+    fi
+    
 #    if [ -s "$soft_dir/" ]; then
 #        echo '[found]'
 #    else
@@ -466,3 +581,4 @@ function check_download_software()
 #install_mysql 2>&1 | tee /root/as-mysql-install.log
 #install_depend 2>&1 | tee /root/as-depend.log
 #install_php 2>&1 | tee /root/as-php.log
+#install_php_ext 2>&1 | tee /root/as-php-ext.log
