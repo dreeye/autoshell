@@ -153,23 +153,22 @@ cat >/usr/local/php/etc/php-fpm.conf<<EOF
 pid = /usr/local/php/var/run/php-fpm.pid
 error_log = /usr/local/php/var/log/php-fpm.log
 log_level = notice
+emergency_restart_threshold = 10
+emergency_restart_interval = 1m
+process_control_timeout = 5s
+daemonize = yes
+rlimit_files = 1024
+rlimit_core = 0
 
 [www]
-listen = /tmp/php-cgi.sock
-listen.backlog = -1
-listen.allowed_clients = 127.0.0.1
-listen.owner = www
-listen.group = www
-listen.mode = 0666
 user = www
 group = www
+listen = 127.0.0.1:9000
 pm = dynamic
-pm.max_children = 10
+pm.max_children = 5
 pm.start_servers = 2
 pm.min_spare_servers = 1
-pm.max_spare_servers = 6
-request_terminate_timeout = 100
-request_slowlog_timeout = 0
+pm.max_spare_servers = 3
 slowlog = var/log/slow.log
 EOF
 
