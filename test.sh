@@ -30,7 +30,27 @@ username="willis"
 echo "Please input the username for vim:"
 read -p "(Default User: willis):" username
 
-#memcached eaccelerator imMagick
+#memcached server
+function install_memcached()
+{
+echo "============================Install memcached================================"
+cd $soft_dir
+tar zxf libevent-2.0.21-stable.tar.gz 
+cd libevent-2.0.21-stable 
+./configure --prefix=/usr/local/libevent/
+make && install
+ln -s /usr/local/libevent/lib/libevent-2.0.so.5 /lib/libevent-2.0.so.5
+cd ../
+tar zxf memcached-1.4.15.tar.gz
+cd memcached-1.4.15
+./configure --prefix=/usr/local/memcached --with-libevent=/usr/local/libevent/
+make && make install
+cd ../
+echo "============================memcached finished================================"
+}
+
+
+#php ext memcached eaccelerator imMagick
 function install_php_ext()
 {
 echo "============================Install php ext================================"
@@ -443,7 +463,7 @@ function init_install()
 	sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 	fi
 
-	for packages in gcc gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers zip unzip man perl-CPAN cmake bison wget mlocate git openssh-server openssh-clients patch make gcc-g77 flex file libtool libtool-libs kernel-devel libpng10 libpng10-devel gd gd-devel libevent libevent-devel fonts-chinese gettext gettext-devel gmp-devel pspell-devel libcap diffutils;
+	for packages in gcc gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers zip unzip man perl-CPAN cmake bison wget mlocate git openssh-server openssh-clients patch make gcc-g77 flex file libtool libtool-libs kernel-devel libpng10 libpng10-devel gd gd-devel fonts-chinese gettext gettext-devel gmp-devel pspell-devel libcap diffutils;
 	do yum -y install $packages; done
 }
 
@@ -562,6 +582,20 @@ function check_download_software()
         echo 'Downloading imagick-2.3.0.tgz' 
         wget -c 'http://pecl.php.net/get/imagick-2.3.0.tgz'
     fi
+    #memcached
+    if [ -s "$soft_dir/memcached-1.4.15.tar.gz" ]; then
+        echo 'memcached-1.4.15.tar.gz[found]'
+    else
+        echo 'Downloading memcached-1.4.15.tar.gz' 
+        wget -c 'http://soft.vpser.net/web/memcached/memcached-1.4.15.tar.gz'
+    fi
+    #libevent
+    if [ -s "$soft_dir/libevent-2.0.21-stable.tar.gz" ]; then
+        echo 'libevent-2.0.21-stable.tar.gz[found]'
+    else
+        echo 'Downloading libevent-2.0.21-stable.tar.gz' 
+        wget -c 'http://soft.vpser.net/lib/libevent/libevent-2.0.21-stable.tar.gz'
+    fi
     
 #    if [ -s "$soft_dir/" ]; then
 #        echo '[found]'
@@ -581,3 +615,4 @@ function check_download_software()
 #install_depend 2>&1 | tee /root/as-depend.log
 #install_php 2>&1 | tee /root/as-php.log
 #install_php_ext 2>&1 | tee /root/as-php-ext.log
+#install_memcached 2>&1 | tee /root/as-memcached.log
