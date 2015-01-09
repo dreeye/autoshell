@@ -38,7 +38,7 @@ cd $soft_dir
 tar zxf libevent-2.0.21-stable.tar.gz 
 cd libevent-2.0.21-stable 
 ./configure --prefix=/usr/local/libevent/
-make && install
+make && make install
 ln -s /usr/local/libevent/lib/libevent-2.0.so.5 /lib/libevent-2.0.so.5
 cd ../
 tar zxf memcached-1.4.15.tar.gz
@@ -611,6 +611,7 @@ function check_download_software()
 #init_install 2>&1 | tee /root/as-init-install.log
 #check_download_software 2>&1 | tee /root/as-download-software.log
 #InstallVim74 2>&1 | tee /root/as-vim-install.log
+#install_nginx 2>&1 | tee /root/as-nginx-install.log
 #install_mysql 2>&1 | tee /root/as-mysql-install.log
 #install_depend 2>&1 | tee /root/as-depend.log
 #install_php 2>&1 | tee /root/as-php.log
