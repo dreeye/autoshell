@@ -30,6 +30,41 @@ username="willis"
 echo "Please input the username for vim:"
 read -p "(Default User: willis):" username
 
+#python2.7
+function install_python7()
+{
+echo "============================Install python2.7================================"
+cd $soft_dir
+tar zxf Python-2.7.9.tgz
+cd Python-2.7.9 
+./configure --prefix=/usr/local/python2.7/
+make && make install
+cd $soft_dir
+#downloading setup pip
+if [ -s "$soft_dir/get-pip.py" ]; then
+    echo 'get-pip.py[found]'
+else
+    echo 'Downloading get-pip.py'
+    wget -c 'https://bootstrap.pypa.io/get-pip.py' 
+fi
+echo "============================python2.7 finished================================"
+#install pip
+echo "============================Install pip==============================="
+/usr/local/python2.7/bin/python2.7 get-pip.py | tee /root/as-pip.log
+echo "============================pip install finished================================"
+#install lxml
+echo "============================Install lxml==============================="
+/usr/local/python2.7/bin/pip2.7 install lxml | tee /root/as-lxml.log
+echo "============================lxml install finished================================"
+#install Scrapy
+echo "============================Install Scrapy==============================="
+/usr/local/python2.7/bin/pip2.7 install Scrapy | tee /root/as-scrapy.log
+echo "============================Scrapy install finished================================"
+ln -s /usr/local/python2.7/bin/python2.7 /usr/bin/python7
+}
+
+
+
 #memcached server
 function install_memcached()
 {
@@ -463,7 +498,7 @@ function init_install()
 	sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 	fi
 
-	for packages in gcc gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers zip unzip man perl-CPAN cmake bison wget mlocate git openssh-server openssh-clients patch make gcc-g77 flex file libtool libtool-libs kernel-devel libpng10 libpng10-devel gd gd-devel fonts-chinese gettext gettext-devel gmp-devel pspell-devel libcap diffutils;
+	for packages in gcc gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel libxslt-devel libffi-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers zip unzip man perl-CPAN cmake bison wget mlocate git openssh-server openssh-clients patch make gcc-g77 flex file libtool libtool-libs kernel-devel libpng10 libpng10-devel gd gd-devel fonts-chinese gettext gettext-devel gmp-devel pspell-devel libcap diffutils;
 	do yum -y install $packages; done
 }
 
