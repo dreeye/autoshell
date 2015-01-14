@@ -35,6 +35,12 @@ function install_python7()
 {
 echo "============================Install python2.7================================"
 cd $soft_dir
+if [ -s "$soft_dir/Python-2.7.9.tgz" ]; then
+    echo 'Python-2.7.9.tgz[found]'
+else
+    echo 'Downloading Python-2.7.9.tgz'
+    wget -c 'https://www.python.org/ftp/python/2.7.9/Python-2.7.9.tgz' 
+fi
 tar zxf Python-2.7.9.tgz
 cd Python-2.7.9 
 ./configure --prefix=/usr/local/python2.7/
@@ -47,20 +53,22 @@ else
     echo 'Downloading get-pip.py'
     wget -c 'https://bootstrap.pypa.io/get-pip.py' 
 fi
-echo "============================python2.7 finished================================"
 #install pip
-echo "============================Install pip==============================="
 /usr/local/python2.7/bin/python2.7 get-pip.py | tee /root/as-pip.log
-echo "============================pip install finished================================"
 #install lxml
-echo "============================Install lxml==============================="
 /usr/local/python2.7/bin/pip2.7 install lxml | tee /root/as-lxml.log
-echo "============================lxml install finished================================"
 #install Scrapy
-echo "============================Install Scrapy==============================="
 /usr/local/python2.7/bin/pip2.7 install Scrapy | tee /root/as-scrapy.log
-echo "============================Scrapy install finished================================"
+#install mysql-python(指定mysql安装路径)
+if [ -s "/usr/local/mysql/bin" ]; then
+    export PATH=$PATH:/usr/local/mysql/bin
+    /usr/local/python2.7/bin/pip2.7 install mysql-python | tee /root/as_mysql.log
+    ln -s /usr/local/mysql/lib/libmysqlclient.so.18 /usr/lib64/libmysqlclient.so.18
+else
+    echo "==unstall mysql_python==="
+fi
 ln -s /usr/local/python2.7/bin/python2.7 /usr/bin/python7
+echo "============================python2.7 finished================================"
 }
 
 
@@ -652,3 +660,4 @@ function check_download_software()
 #install_php 2>&1 | tee /root/as-php.log
 #install_php_ext 2>&1 | tee /root/as-php-ext.log
 #install_memcached 2>&1 | tee /root/as-memcached.log
+#install_python7 2>&1 | tee /root/as-python7.log
