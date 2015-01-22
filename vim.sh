@@ -1,8 +1,3 @@
-#include init
-. ./init.sh
-#exce init function in init.sh
-init
-
 # choose your username by vim
 username="willis"
 echo "Please input the username for vim:"
@@ -21,6 +16,13 @@ fi
 echo "==========================="
 echo "New add user is :$username"
 echo "==========================="
+
+#include init
+. ./init.sh
+#exce init function in init.sh
+init
+clear
+
 #用户根目录
 user_dir='/home/'$username
 

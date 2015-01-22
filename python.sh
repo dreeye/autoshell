@@ -1,17 +1,23 @@
+# choose your username by vim
+version="3"
+echo "Please input the version for python:"
+read -p "(Default Version: 3):" version
+
 #include init
 . ./init.sh
 #exce init function in init.sh
 init
 clear
 
-# choose your username by vim
-version="3"
-echo "Please input the version for python:"
-read -p "(Default Version: 3):" version
-
 #python2.7
 function install_python7()
 {
+
+if [ -d "/usr/local/python2.7" ]; then
+    echo "python2.7 dir exits!!"
+    exit 0
+fi
+
 echo "============================Install python2.7.9================================"
 cd $soft_dir
 if [ -s "$soft_dir/Python-2.7.9.tgz" ]; then
