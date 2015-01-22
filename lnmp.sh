@@ -1,99 +1,11 @@
-#!/bin/bash
-PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
-export PATH
-
-# Check if user is root
-if [ $(id -u) != "0" ]; then
-    echo "Error: You must be root to run this script, please use root to install lnmp"
-    exit 1
-fi
-
+#include init
+. ./init.sh
+#exce init function in init.sh
+init
 clear
 echo "========================================================================="
-echo "PNshell for CentOS6.6 Linux Server, Written by ProNoz"
+echo "Install LNMP"
 echo "========================================================================="
-#shell dir
-shell_dir=$(pwd)
-if [ ! -d "conf" ]; then
-    echo 'please cd PNshell dir'
-    exit 0
-fi
-if [ ! -d "${shell_dir}/software" ]; then
-    mkdir $shell_dir'/software'
-fi
-# software dir
-soft_dir=$shell_dir'/software'
-# conf dir
-conf_dir=$shell_dir'/conf'
-# choose your username by vim
-username="willis"
-echo "Please input the username for vim:"
-read -p "(Default User: willis):" username
-
-#python2.7
-function install_python7()
-{
-echo "============================Install python2.7================================"
-cd $soft_dir
-if [ -s "$soft_dir/Python-2.7.9.tgz" ]; then
-    echo 'Python-2.7.9.tgz[found]'
-else
-    echo 'Downloading Python-2.7.9.tgz'
-    wget -c 'https://www.python.org/ftp/python/2.7.9/Python-2.7.9.tgz' 
-fi
-tar zxf Python-2.7.9.tgz
-cd Python-2.7.9 
-./configure --prefix=/usr/local/python2.7/
-make && make install
-cd $soft_dir
-#downloading setup pip
-if [ -s "$soft_dir/get-pip.py" ]; then
-    echo 'get-pip.py[found]'
-else
-    echo 'Downloading get-pip.py'
-    wget -c 'https://bootstrap.pypa.io/get-pip.py' 
-fi
-#install pip
-/usr/local/python2.7/bin/python2.7 get-pip.py | tee /root/as-pip.log
-#install lxml
-/usr/local/python2.7/bin/pip2.7 install lxml | tee /root/as-lxml.log
-#install Scrapy
-/usr/local/python2.7/bin/pip2.7 install Scrapy | tee /root/as-scrapy.log
-#install service_identity
-/usr/local/python2.7/bin/pip2.7 install service_identity | tee /root/as-service_identity.log
-#install mysql-python(指定mysql安装路径)
-if [ -s "/usr/local/mysql/bin" ]; then
-    export PATH=$PATH:/usr/local/mysql/bin
-    /usr/local/python2.7/bin/pip2.7 install mysql-python | tee /root/as_mysql.log
-    ln -s /usr/local/mysql/lib/libmysqlclient.so.18 /usr/lib64/libmysqlclient.so.18
-else
-    echo "==unstall mysql_python==="
-fi
-ln -s /usr/local/python2.7/bin/python2.7 /usr/bin/python7
-echo "============================python2.7 finished================================"
-}
-
-
-
-#memcached server
-function install_memcached()
-{
-echo "============================Install memcached================================"
-cd $soft_dir
-tar zxf libevent-2.0.21-stable.tar.gz 
-cd libevent-2.0.21-stable 
-./configure --prefix=/usr/local/libevent/
-make && make install
-ln -s /usr/local/libevent/lib/libevent-2.0.so.5 /lib/libevent-2.0.so.5
-cd ../
-tar zxf memcached-1.4.15.tar.gz
-cd memcached-1.4.15
-./configure --prefix=/usr/local/memcached --with-libevent=/usr/local/libevent/
-make && make install
-cd ../
-echo "============================memcached finished================================"
-}
-
 
 #php ext memcached eaccelerator imMagick
 function install_php_ext()
@@ -101,27 +13,32 @@ function install_php_ext()
 echo "============================Install php ext================================"
 #memcached
 cd $soft_dir
+
 tar zxf libmemcached-1.0.18.tar.gz
 cd libmemcached-1.0.18
 ./configure --prefix=/usr/local/libmemcached
 make && make install
 cd ../
+
 tar zxf memcached-2.2.0.tgz
 cd memcached-2.2.0
 /usr/local/php/bin/phpize
 ./configure --with-php-config=/usr/local/php/bin/php-config --with-libmemcached-dir=/usr/local/libmemcached/
 make && make install
+
 cd ../
 echo "Modify php.ini......"
 echo "Add memcached.so"
 sed -i '/; extension_dir = "ext"/a\extension = "memcached.so"' /usr/local/php/etc/php.ini
 #eaccelerator
 cd $soft_dir
+
 tar jxf eaccelerator-0.9.6.1.tar.bz2
 cd eaccelerator-0.9.6.1/ 
 /usr/local/php/bin/phpize
 ./configure --enable-eaccelerator=shared  --with-php-config=/usr/local/php/bin/php-config
 make && make install
+
 cd ../
 echo "mkdir eaccelerator_cache dir"
 mkdir -p  /usr/local/eaccelerator_cache
@@ -377,13 +294,6 @@ echo "============================Install Mysql-5.6.12 Finished=================
 }
 
 
-
-
-
-
-
-
-
 function install_nginx()
 {
 echo "============================Install Nginx================================="
@@ -433,105 +343,12 @@ fi
 
 }
 
-function InstallVim74()
-{
-	echo "==========================="
-    #指定vim的用户
-	if [ "$username" = "" ]; then
-		username="willis"
-	fi
-    #如果输入的用户不存在，则自动创建用户
-	if [ ! -d "/home/$username" ]; then
-        useradd $username
-	fi
-	echo "==========================="
-	echo "New add user is :$username"
-	echo "==========================="
-    #用户根目录
-    user_dir='/home/'$username
 
-echo "============================Install VIM7.4=================================="
-cd $soft_dir
-tar jxf vim-7.4.tar.bz2
-cd vim74
-./configure --prefix=/usr/local/vim74 --enable-multibyte  --enable-fontset --with-features=huge
-make && make install
-ln -s /usr/local/vim74/bin/vim /bin/vim
-ln -s /usr/local/vim74/bin/vim /usr/bin/vim
-#修改desert模板
-cp -f ${conf_dir}/vim/desert.vim /usr/local/vim74/share/vim/vim74/colors/desert.vim
-#root和创建的用户都用同一个vimrc
-cp ${conf_dir}/vim/.vimrc /root
-cp ${conf_dir}/vim/.vimrc ${user_dir}/
-
-
-echo "Install NERD_TREE For VIM7.4"
-cd $soft_dir
-unzip -q nerdtree.zip
-#root的nerdtree插件目录
-mkdir -p /root/.vim/plugin
-mkdir -p /root/.vim/doc
-cp -p plugin/NERD_tree.vim /root/.vim/plugin
-cp -p doc/NERD_tree.txt /root/.vim/doc
-#新建账号的nerdtree插件目录
-mkdir -p ${user_dir}/.vim/plugin
-mkdir -p ${user_dir}/.vim/doc
-cp -p plugin/NERD_tree.vim ${user_dir}/.vim/plugin
-cp -p doc/NERD_tree.txt ${user_dir}/.vim/doc
-cd ${user_dir}/
-#修改新建账号权限
-chown $username:$username .vimrc
-chown -R $username:$username .vim
-echo "Install VIM7.4 Finished"
-
-}
-
-function init_install()
-{
-    #show CentOS版本
-	cat /etc/issue
-    #show Linux core
-	uname -a
-    #show memory
-	MemTotal=`free -m | grep Mem | awk '{print  $2}'`  
-	echo -e "\n Memory is: $MemTotal MB "
-	#Set timezone
-	rm -rf /etc/localtime
-	ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-
-	yum install -y ntp
-	ntpdate -u pool.ntp.org
-	date
-    sed -i '$a alias utime='\''sudo ntpdate us.pool.ntp.org'\''' /etc/bashrc
-    sed -i '$a alias grep='\''grep --color=auto'\''' /etc/bashrc
-
-	#Disable SeLinux
-	if [ -s /etc/selinux/config ]; then
-	sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
-	fi
-
-	for packages in gcc gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel libxslt-devel libffi-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers zip unzip man perl-CPAN cmake bison wget mlocate git openssh-server openssh-clients patch make gcc-g77 flex file libtool libtool-libs kernel-devel libpng10 libpng10-devel gd gd-devel fonts-chinese gettext gettext-devel gmp-devel pspell-devel libcap diffutils libpcap-devel;
-	do yum -y install $packages; done
-}
 
 function check_download_software()
 {
     clear
     cd $soft_dir
-    #下载vim7.4
-    if [ -s "$soft_dir/vim-7.4.tar.bz2" ]; then
-        echo 'vim-7.4.tar.bz2[found]'
-    else
-        echo 'Downloading vim-7.4.tar.bz2'
-        wget -c 'http://ftp.vim.org/vim/unix/vim-7.4.tar.bz2' 
-    fi
-    #download nerdtree
-    if [ -s "$soft_dir/nerdtree.zip" ]; then
-        echo 'nerdtree.zip[found]'
-    else
-        echo 'Downloading nerdtree.zip'
-        wget -c 'http://www.vim.org/scripts/download_script.php?src_id=17123' -O nerdtree.zip
-    fi
     #download pcre
     if [ -s "$soft_dir/pcre-8.12.tar.gz" ]; then
         echo 'pcre-8.12.tar.gz[found]'
@@ -629,20 +446,6 @@ function check_download_software()
         echo 'Downloading imagick-2.3.0.tgz' 
         wget -c 'http://pecl.php.net/get/imagick-2.3.0.tgz'
     fi
-    #memcached
-    if [ -s "$soft_dir/memcached-1.4.15.tar.gz" ]; then
-        echo 'memcached-1.4.15.tar.gz[found]'
-    else
-        echo 'Downloading memcached-1.4.15.tar.gz' 
-        wget -c 'http://soft.vpser.net/web/memcached/memcached-1.4.15.tar.gz'
-    fi
-    #libevent
-    if [ -s "$soft_dir/libevent-2.0.21-stable.tar.gz" ]; then
-        echo 'libevent-2.0.21-stable.tar.gz[found]'
-    else
-        echo 'Downloading libevent-2.0.21-stable.tar.gz' 
-        wget -c 'http://soft.vpser.net/lib/libevent/libevent-2.0.21-stable.tar.gz'
-    fi
     
 #    if [ -s "$soft_dir/" ]; then
 #        echo '[found]'
@@ -655,13 +458,9 @@ function check_download_software()
 }
 
 #excute
-#init_install 2>&1 | tee /root/as-init-install.log
 #check_download_software 2>&1 | tee /root/as-download-software.log
-#InstallVim74 2>&1 | tee /root/as-vim-install.log
 #install_nginx 2>&1 | tee /root/as-nginx-install.log
 #install_mysql 2>&1 | tee /root/as-mysql-install.log
 #install_depend 2>&1 | tee /root/as-depend.log
 #install_php 2>&1 | tee /root/as-php.log
 #install_php_ext 2>&1 | tee /root/as-php-ext.log
-#install_memcached 2>&1 | tee /root/as-memcached.log
-#install_python7 2>&1 | tee /root/as-python7.log
