@@ -59,6 +59,8 @@ fi
 /usr/local/python2.7/bin/pip2.7 install lxml | tee /root/as-lxml.log
 #install Scrapy
 /usr/local/python2.7/bin/pip2.7 install Scrapy | tee /root/as-scrapy.log
+#install service_identity
+/usr/local/python2.7/bin/pip2.7 install service_identity | tee /root/as-service_identity.log
 #install mysql-python(指定mysql安装路径)
 if [ -s "/usr/local/mysql/bin" ]; then
     export PATH=$PATH:/usr/local/mysql/bin
