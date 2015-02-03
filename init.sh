@@ -56,10 +56,10 @@ function init()
         sed -i '$a alias grep='\''grep --color=auto'\''' /etc/bashrc
     fi
 
-    alias_utime=$(grep 'alias utime='\''sudo ntpdate us.pool.ntp.org'\''' /etc/bashrc)
+    alias_utime=$(grep 'alias utime='\''sudo ntpdate -u pool.ntp.org'\''' /etc/bashrc)
 
     if [ "$alias_utime" == "" ]; then
-        sed -i '$a alias utime='\''sudo ntpdate us.pool.ntp.org'\''' /etc/bashrc
+        sed -i '$a alias utime='\''sudo ntpdate -u pool.ntp.org'\''' /etc/bashrc
     fi
 
     #Disable SeLinux
