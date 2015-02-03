@@ -3,6 +3,9 @@ version="3"
 echo "Please input the version for python:"
 read -p "(Default Version: 3):" version
 
+if ["$version" == ""]; then
+    version="3"
+fi
 #include init
 . ./init.sh
 #exce init function in init.sh
@@ -13,12 +16,13 @@ clear
 function install_python7()
 {
 
+echo "============================Install python2.7.9================================"
+
 if [ -d "/usr/local/python2.7" ]; then
     echo "python2.7 dir exits!!"
     exit 0
 fi
 
-echo "============================Install python2.7.9================================"
 cd $soft_dir
 if [ -s "$soft_dir/Python-2.7.9.tgz" ]; then
     echo 'Python-2.7.9.tgz[found]'
@@ -63,6 +67,11 @@ function install_python3()
 
 echo "============================Install python3.4.2================================"
 
+if [ -d "/usr/local/python3.4" ]; then
+    echo "python3.4 dir exits!!"
+    exit 0
+fi
+
 cd $soft_dir
 
 if [ -s "$soft_dir/Python-3.4.2.tgz" ]; then
@@ -88,10 +97,18 @@ else
 fi
 #install pip
 /usr/local/python3.4/bin/python3.4 get-pip.py | tee /root/as-pip3.4.log
+#install PyMysql
+/usr/local/python3.4/bin/pip3.4 install PyMySQL | tee /root/as-pymysql.log
+#install requests
+/usr/local/python3.4/bin/pip3.4 install requests
+#install beautiful soup 4
+/usr/local/python3.4/bin/pip3.4 install beautifulsoup4
 
+
+ln -s /usr/local/python3.4/bin/python3.4 /usr/bin/python3
 }
 
-if [ "$version" == '3' ]; then
+if [ "$version" == "3" ]; then
     install_python3 2>&1 | tee /root/as-python7.log
 else
     install_python7 2>&1 | tee /root/as-python7.log
