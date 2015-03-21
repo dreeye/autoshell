@@ -7,7 +7,7 @@ mongodb_password=""
 function_start_mongodb() 
 { 
     printf "Starting MongoDB...\n" 
-    /usr/local/mongodb/bin/mongod --fork --dbpath /data/mongo_data --logpath /var/log/mongodb.log --port ${mongodb_port}
+    /usr/local/mongodb/bin/mongod --fork --dbpath /data/mongo_data --logpath /var/log/mongodb.log --port ${mongodb_port} --bind_ip=127.0.0.1
 } 
 
 function_stop_mongodb() 
