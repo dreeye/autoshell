@@ -104,12 +104,16 @@ fi
 #install beautiful soup 4
 /usr/local/python3.4/bin/pip3.4 install beautifulsoup4 | tee /root/as-beautifulsoup4.log
 #install douban-client
-/usr/local/python3.4/bin/pip3.4 install douban-client | tee /root/as-douban-client.log
+#/usr/local/python3.4/bin/pip3.4 install douban-client | tee /root/as-douban-client.log
 #install lxml
 /usr/local/python3.4/bin/pip3.4 install lxml | tee /root/as-lxml.log
 #install tornado
 /usr/local/python3.4/bin/pip3.4 install tornado | tee /root/as-tornado.log
-/usr/local/python3.4/bin/pip3.4 install torndb | tee /root/as-torndb.log
+#/usr/local/python3.4/bin/pip3.4 install torndb | tee /root/as-torndb.log
+/usr/local/python3.4/bin/pip3.4 install motor | tee /root/as-motor.log
+/usr/local/python3.4/bin/pip3.4 install redis | tee /root/as-redis.log
+#install supervisor
+#/usr/local/python3.4/bin/pip3.4 install  | tee /root/as-redis.log
 
 ln -s /usr/local/python3.4/bin/python3.4 /usr/bin/python3
 }
