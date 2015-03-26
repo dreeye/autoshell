@@ -3,11 +3,12 @@
 mongodb_port=27017
 mongodb_username="root" 
 mongodb_password="" 
+DATE=`date +%Y%m%d`
 
 function_start_mongodb() 
 { 
     printf "Starting MongoDB...\n" 
-    /usr/local/mongodb/bin/mongod --fork --dbpath /data/mongo_data --logpath /var/log/mongodb.log --port ${mongodb_port}
+    /usr/local/mongodb/bin/mongod --fork --dbpath /data/mongo_data --logappend --logpath /var/log/mongodb_${DATE}.log --port ${mongodb_port}
 } 
 
 function_stop_mongodb() 
