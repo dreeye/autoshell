@@ -99,23 +99,23 @@ fi
 /usr/local/python3.4/bin/python3.4 get-pip.py | tee /root/as-pip3.4.log
 #install PyMysql
 /usr/local/python3.4/bin/pip3.4 install PyMySQL | tee /root/as-pymysql.log
+/usr/local/python3.4/bin/pip3.4 install pymongo | tee /root/as-pymongo.log
 #install requests
 /usr/local/python3.4/bin/pip3.4 install requests | tee /root/as-requests.log
 #install beautiful soup 4
 /usr/local/python3.4/bin/pip3.4 install beautifulsoup4 | tee /root/as-beautifulsoup4.log
-#install douban-client
-#/usr/local/python3.4/bin/pip3.4 install douban-client | tee /root/as-douban-client.log
 #install lxml
 /usr/local/python3.4/bin/pip3.4 install lxml | tee /root/as-lxml.log
 #install tornado
 /usr/local/python3.4/bin/pip3.4 install tornado | tee /root/as-tornado.log
-#/usr/local/python3.4/bin/pip3.4 install torndb | tee /root/as-torndb.log
-/usr/local/python3.4/bin/pip3.4 install motor | tee /root/as-motor.log
 /usr/local/python3.4/bin/pip3.4 install redis | tee /root/as-redis.log
+/usr/local/python3.4/bin/pip3.4 install pep8 | tee /root/as-pep8.log
 #install supervisor
 #/usr/local/python3.4/bin/pip3.4 install  | tee /root/as-redis.log
 
 ln -s /usr/local/python3.4/bin/python3.4 /usr/bin/python3
+ln -s /usr/local/python3.4/bin/pep8 /usr/bin/pep8
+ln -s /usr/local/python3.4/bin/pip3.4 /usr/bin/pip
 }
 
 if [ "$version" == "3" ]; then
