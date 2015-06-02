@@ -4,7 +4,7 @@
 init
 clear
 
-echo "============================Install mongodb================================"
+echo "============================ Install mongodb ================================"
 cd $soft_dir
 
 if [ -s "$soft_dir/mongodb-linux-x86_64-3.0.0" ]; then
@@ -21,8 +21,8 @@ fi
 
 
 tar zxf mongodb-linux-x86_64-3.0.0.tgz
-mv mongodb-linux-x86_64-3.0.0 /usr/local/mongodb
+cp -av mongodb-linux-x86_64-3.0.0/* $dst_root
 mkdir /data/mongo_data
 #/usr/local/mongodb/bin/mongod --fork --dbpath /data/mongo_data --logpath /var/log/mongodb.log 
 cd ../
-echo "============================mongodb finished================================"
+echo "============================ mongodb finished ================================"

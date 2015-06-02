@@ -18,8 +18,6 @@ fi
 
 tar jxf ngrep-1.45.tar.bz2
 cd ngrep-1.45
-sudo ./configure --with-pcap-includes=/usr/include/pcap
+sudo ./configure --prefix=$dst_root --with-pcap-includes=/usr/include/pcap
 make && make install
-
-
 

@@ -1,5 +1,12 @@
 #!/bin/bash
-PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+
+# 安装路径
+dst_root=$(tail -n 1 DST_ROOT)
+if [ ! -d "$dst_root" ]; then
+    mkdir  $dst_root
+    echo 'all files will install to' $dst_root
+fi
+PATH=$dst_root/bin:$dst_root/sbin:~/bin:$PATH
 export PATH
 
 # Check if user is root
@@ -12,6 +19,11 @@ clear
 echo "========================================================================="
 echo "Include the init.sh file"
 echo "========================================================================="
+
+
+# 添加 web 用户组, 跟网络操作相关的用户, 都应该属于 web 组
+grep '^web' /etc/group || /usr/sbin/groupadd web
+
 
 #shell dir
 shell_dir=$(pwd)
@@ -46,7 +58,7 @@ function init()
     rm -rf /etc/localtime
     ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
-    yum install -y ntp
+    yum -y install ntp
     ntpdate -u pool.ntp.org
     date
 
