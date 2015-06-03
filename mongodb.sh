@@ -5,6 +5,9 @@ init
 clear
 
 echo "============================ Install mongodb ================================"
+
+grep '^mongo' /etc/passwd || /usr/sbin/useradd --groups=web mongo
+
 cd $soft_dir
 
 if [ -s "$soft_dir/mongodb-linux-x86_64-3.0.0" ]; then
