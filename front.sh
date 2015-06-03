@@ -21,7 +21,7 @@ fi
 
 tar -xvzf ./node-v0.12.4.tar.gz
 cd ./node-v0.12.4
-./config
+./config --prefix=$dst_root
 make && make install
 rm -rf ./node-v0.12.4.tar.gz
 rm -rf ./node-v0.12.4
