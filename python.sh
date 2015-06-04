@@ -1,5 +1,3 @@
-# choose your username by vim
-
 #include init
 . ./init.sh
 #exce init function in init.sh
@@ -34,9 +32,28 @@ make && make install
 
 cd $soft_dir
 
+echo "============================ Upgrade pip ================================"
+
 # upgrade pip
 pip3.4 install --upgrade pip | tee /root/as-pip.log
+
+echo "============================ Upgrade pip finished ================================"
+
+echo "============================ Install supervisor ================================"
+
 # install supervisor
+if [ -d "$soft_dir/supervisor" ]; then
+    echo 'supervisor [found]'
+else
+    echo 'Downloading supervisor'
+    git clone 'https://github.com/Supervisor/supervisor.git' 
+fi
+
+cd supervisor
+python3 setup.py install --record /tmp/supervisor_install.log
+
+echo "============================ Install supervisor finished ================================"
+
 }
 
 install_python3 2>&1 | tee /root/as-python3.log

@@ -297,8 +297,7 @@ echo "============================Install Mysql-5.6.12 Finished=================
 function install_nginx()
 {
 echo "============================Install Nginx================================="
-groupadd www
-useradd -s /sbin/nologin -g www www
+grep '^nginx' /etc/passwd || /usr/sbin/useradd -s /sbin/nologin --groups=web nginx 
 cd $soft_dir
 tar zxf pcre-8.12.tar.gz
 cd pcre-8.12/
@@ -310,11 +309,10 @@ ldconfig
 
 tar zxf nginx-1.6.2.tar.gz
 cd nginx-1.6.2/
-./configure --user=www --group=www --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-ipv6 --with-pcre=${soft_dir}/pcre-8.12
+./configure --user=nginx --group=web --prefix=${dst_root} --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-ipv6 --with-pcre=${soft_dir}/pcre-8.12
 make && make install
 cd ../
 
-ln -s /usr/local/nginx/sbin/nginx /usr/bin/nginx
 rm -f /usr/local/nginx/conf/nginx.conf
 cd $conf_dir
 cp nginx/nginx.conf /usr/local/nginx/conf/nginx.conf
