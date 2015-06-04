@@ -36,21 +36,7 @@ cd $soft_dir
 
 # upgrade pip
 pip3.4 install --upgrade pip | tee /root/as-pip.log
-# install PyMysql
-pip3.4 install PyMySQL | tee /root/as-pymysql.log
-pip3.4 install pymongo | tee /root/as-pymongo.log
-# install requests
-pip3.4 install requests | tee /root/as-requests.log
-# install beautiful soup 4
-pip3.4 install beautifulsoup4 | tee /root/as-beautifulsoup4.log
-# install lxml
-pip3.4 install lxml | tee /root/as-lxml.log
-# install tornado
-pip3.4 install tornado | tee /root/as-tornado.log
-pip3.4 install redis | tee /root/as-redis.log
-pip3.4 install pep8 | tee /root/as-pep8.log
 # install supervisor
-# /usr/local/python3.4/bin/pip3.4 install  | tee /root/as-redis.log
 }
 
 install_python3 2>&1 | tee /root/as-python3.log
