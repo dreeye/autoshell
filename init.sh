@@ -74,6 +74,13 @@ function init()
         sed -i '$a alias utime='\''sudo ntpdate -u pool.ntp.org'\''' /etc/bashrc
     fi
 
+    root_path=$(grep "PATH=$dst_root/bin:$dst_root/sbin:~/bin:$PATH" /etc/bashrc)
+
+    if [ "$root_path" == "" ]; then
+        sed -i "\$a PATH=$dst_root/bin:$dst_root/sbin:~/bin:$PATH" /etc/bashrc
+        sed -i "\$a export PATH" /etc/bashrc
+    fi
+
     #Disable SeLinux
     if [ -s /etc/selinux/config ]; then
     sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
