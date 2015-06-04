@@ -298,7 +298,22 @@ function install_nginx()
 {
 echo "============================Install Nginx================================="
 grep '^nginx' /etc/passwd || /usr/sbin/useradd -s /sbin/nologin --groups=web nginx 
+grep '^git' /etc/passwd || /usr/sbin/useradd --groups=web git
 cd $soft_dir
+#download pcre
+if [ -s "$soft_dir/pcre-8.12.tar.gz" ]; then
+    echo 'pcre-8.12.tar.gz[found]'
+else
+    echo 'Downloading pcre-8.12.tar.gz'
+    wget -c 'http://downloads.sourceforge.net/project/pcre/pcre/8.12/pcre-8.12.tar.gz'
+fi
+#download nginx
+if [ -s "$soft_dir/nginx-1.6.2.tar.gz" ]; then
+    echo 'nginx-1.6.2.tar.gz[found]'
+else
+    echo 'Downloading nginx-1.6.2.tar.gz'
+    wget -c 'http://nginx.org/download/nginx-1.6.2.tar.gz'
+fi
 tar zxf pcre-8.12.tar.gz
 cd pcre-8.12/
 ./configure
@@ -309,29 +324,24 @@ ldconfig
 
 tar zxf nginx-1.6.2.tar.gz
 cd nginx-1.6.2/
-./configure --user=nginx --group=web --prefix=${dst_root} --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-ipv6 --with-pcre=${soft_dir}/pcre-8.12
+./configure --user=nginx --group=web --prefix=${dst_root} --conf-path=${dst_etc}/nginx/nginx.conf --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-ipv6 --with-pcre=${soft_dir}/pcre-8.12
 make && make install
 cd ../
 
-rm -f /usr/local/nginx/conf/nginx.conf
+rm -f ${dst_etc}/nginx/nginx.conf
 cd $conf_dir
-cp nginx/nginx.conf /usr/local/nginx/conf/nginx.conf
+cp nginx/nginx.conf ${dst_etc}/nginx/nginx.conf
 
-#www项目目录创建
-mkdir -p /usr/local/webserver/htdocs/pronoz
-chmod +w /usr/local/webserver/htdocs/pronoz     
-chown -R www:www /usr/local/webserver/htdocs/pronoz
 #vhost
 cd $conf_dir
-mkdir  /usr/local/nginx/conf/vhost
-cp nginx/vhost_www.pronoz.cc.conf /usr/local/nginx/conf/vhost/
-chmod +w /usr/local/nginx/conf/vhost
-chown -R www:www /usr/local/nginx/conf/vhost
-#logs dir
-chmod +w /usr/local/nginx/logs/      
-chown -R www:www /usr/local/nginx/logs/
+mkdir  ${dst_etc}/nginx/vhost
+cp nginx/vhost_www.maov.cc.conf ${dst_etc}/nginx/vhost/
+chmod +w ${dst_etc}/nginx/vhost
+chown -R nginx:web ${dst_etc}/nginx/vhost
+
+chmod +w ${dst_logs} 
 #startup
-sed -i '$a /usr/local/nginx/sbin/nginx' /etc/rc.local
+sed -i "\$a ${dst_root}/sbin/nginx" /etc/rc.local
 #iptables port 80 rules
 if [ -s /sbin/iptables ]; then
 /sbin/iptables -I INPUT -p tcp --dport 80 -j ACCEPT
@@ -457,7 +467,7 @@ function check_download_software()
 
 #excute
 #check_download_software 2>&1 | tee /root/as-download-software.log
-#install_nginx 2>&1 | tee /root/as-nginx-install.log
+install_nginx 2>&1 | tee /root/as-nginx-install.log
 #install_mysql 2>&1 | tee /root/as-mysql-install.log
 #install_depend 2>&1 | tee /root/as-depend.log
 #install_php 2>&1 | tee /root/as-php.log

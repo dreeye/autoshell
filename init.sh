@@ -2,10 +2,18 @@
 
 # 安装路径
 dst_root=$(tail -n 1 DST_ROOT)
+dst_var=$dst_root/var
+dst_etc=$dst_root/etc
+dst_htdocs=$dst_root/htdocs
+dst_logs=$dst_var/logs
 if [ ! -d "$dst_root" ]; then
-    mkdir  $dst_root
+    mkdir -p $dst_var
+    mkdir -p $dst_etc
+    mkdir -p $dst_htdocs
+    mkdir -p $dst_logs
     echo 'all files will install to' $dst_root
 fi
+
 PATH=$dst_root/bin:$dst_root/sbin:~/bin:$PATH
 export PATH
 
