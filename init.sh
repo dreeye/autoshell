@@ -5,12 +5,17 @@ dst_root=$(tail -n 1 DST_ROOT)
 dst_var=$dst_root/var
 dst_etc=$dst_root/etc
 dst_htdocs=$dst_root/htdocs
+# var/
 dst_logs=$dst_var/logs
+dst_run=$dst_var/run
+dst_tmp=$dst_var/tmp
 if [ ! -d "$dst_root" ]; then
-    mkdir -p $dst_var
-    mkdir -p $dst_etc
-    mkdir -p $dst_htdocs
+    mkdir $dst_var
+    mkdir $dst_etc
+    mkdir $dst_htdocs
     mkdir -p $dst_logs
+    mkdir -p $dst_run
+    mkdir -p $dst_tmp
     echo 'all files will install to' $dst_root
 fi
 

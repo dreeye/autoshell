@@ -324,13 +324,20 @@ ldconfig
 
 tar zxf nginx-1.6.2.tar.gz
 cd nginx-1.6.2/
-./configure --user=nginx --group=web --prefix=${dst_root} --conf-path=${dst_etc}/nginx/nginx.conf --with-http_stub_status_module --with-http_ssl_module --with-http_gzip_static_module --with-ipv6 --with-pcre=${soft_dir}/pcre-8.12
+./configure --user=nginx --group=web --prefix=${dst_root} --conf-path=${dst_etc}/nginx/nginx.conf --with-pcre=${soft_dir}/pcre-8.12 --error-log-path=${dst_logs}/nginx/error.log --with-http_stub_status_module --with-http_ssl_module --with-http_spdy_module --with-http_realip_module --with-http_addition_module --with-http_sub_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_auth_request_module --with-http_random_index_module --with-http_secure_link_module
+
+mkdir -p ${dst_htdocs}/nginx && sed -i "/html/ s#/Maov'#/Maov/htdocs/nginx'#" objs/Makefile
+
 make && make install
 cd ../
 
+mkdir ${dst_tmp}/nginx
+mkdir ${dst_run}/nginx
 rm -f ${dst_etc}/nginx/nginx.conf
 cd $conf_dir
 cp nginx/nginx.conf ${dst_etc}/nginx/nginx.conf
+mkdir ${dst_etc}/nginx/common/
+cp nginx/error.conf ${dst_etc}/nginx/common/
 
 #vhost
 cd $conf_dir
@@ -341,7 +348,10 @@ chown -R nginx:web ${dst_etc}/nginx/vhost
 
 chmod +w ${dst_logs} 
 #startup
-sed -i "\$a ${dst_root}/sbin/nginx" /etc/rc.local
+rc_nginx_local=$(grep "${dst_root}/sbin/nginx" /etc/rc.local)
+if [ "$rc_nginx_local" == "" ]; then
+    sed -i "\$a ${dst_root}/sbin/nginx" /etc/rc.local
+fi
 #iptables port 80 rules
 if [ -s /sbin/iptables ]; then
 /sbin/iptables -I INPUT -p tcp --dport 80 -j ACCEPT
