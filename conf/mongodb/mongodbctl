@@ -8,13 +8,13 @@ DATE=`date +%Y%m%d`
 function_start_mongodb() 
 { 
     printf "Starting MongoDB...\n" 
-    /usr/local/mongodb/bin/mongod --fork --dbpath /data/mongo_data --logappend --logpath /var/log/mongodb_${DATE}.log --port ${mongodb_port}
+    mongod --fork --dbpath /data/mongo_data --logappend --logpath /Maov/var/logs/mongodb/mongodb_${DATE}.log --port ${mongodb_port}
 } 
 
 function_stop_mongodb() 
 { 
     printf "Stoping MongoDB...\n" 
-    /usr/local/mongodb/bin/mongod --dbpath /data/mongo_data --shutdown 
+    mongod --dbpath /data/mongo_data --shutdown 
 } 
 
  function_restart_mongodb() 
@@ -33,5 +33,5 @@ function_stop_mongodb
  elif [ "$1" = "restart" ]; then 
  function_restart_mongodb 
  else 
- printf "Usage: /usr/local/mongodb/${mongodb_port}/mongodb {start|stop|restart}\n"
+ printf "Usage: mongodb/${mongodb_port}/mongodb {start|stop|restart}\n"
 fi
