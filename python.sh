@@ -52,6 +52,12 @@ fi
 cd supervisor
 python3 setup.py install --record /tmp/supervisor_install.log
 
+if [ ! -d "${dst_etc}/supervisor" ]; then
+    echo "mkdir etc/supervisor dir!!!"
+    mkdir -p ${dst_etc}/supervisor
+fi
+echo_supervisord_conf > ${dst_etc}/supervisor/supervisord.conf
+
 echo "============================ Install supervisor finished ================================"
 
 }
