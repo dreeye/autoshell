@@ -21,16 +21,13 @@ fi
 
 tar -xvzf ./node-v0.12.4.tar.gz
 cd ./node-v0.12.4
-./config --prefix=$dst_root
+./configure --prefix=$dst_root
 make && make install
-rm -rf ./node-v0.12.4.tar.gz
-rm -rf ./node-v0.12.4
+# rm -rf ./node-v0.12.4.tar.gz
+# rm -rf ./node-v0.12.4
 
 #install front-build modules. eg:grunt
-sudo npm install grunt -g
-sudo npm install bower -g
-
-#come into dir:static and install modules
-cd ./static
-npm install
-
+echo "install grunt by npm"
+npm install grunt -g
+echo "install bower by npm"
+npm install bower -g
