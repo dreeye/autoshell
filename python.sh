@@ -58,6 +58,12 @@ if [ ! -d "${dst_etc}/supervisor" ]; then
 fi
 echo_supervisord_conf > ${dst_etc}/supervisor/supervisord.conf
 
+if [ ! -d "${dst_logs}/supervisor" ]; then
+    echo "mkdir var/logs/supervisor dir!!!"
+    mkdir -p ${dst_logs}/supervisor
+fi
+chown -R python:python ${dst_logs}/supervisor
+
 echo "============================ Install supervisor finished ================================"
 
 }

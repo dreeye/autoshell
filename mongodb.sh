@@ -30,16 +30,22 @@ if [ ! -d "${dst_etc}/mongodb" ]; then
     mkdir -p ${dst_etc}/mongodb
 fi
 
+
 if [ ! -d "${dst_logs}/mongodb" ]; then
     echo "mkdir var/logs/mongodb dir!!!"
     mkdir -p ${dst_logs}/mongodb
 fi
 
+
 echo "cp bin/mongodbctl shell!!!"
 cd $conf_dir
 cp mongodb/mongodbctl ${dst_root}/bin/
-chmod 755 ${dst_root}/bin/mongodbctl
 
+chown -R mongodb:mongodb ${dst_etc}/mongodb
+chown -R mongodb:mongodb /data/mongo_data
+chown -R mongodb:mongodb ${dst_logs}/mongodb
+chown -R mongodb:mongodb ${dst_root}/bin/mongodbctl
+chmod 755 ${dst_root}/bin/mongodbctl
 
 
 cd ../
