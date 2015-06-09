@@ -47,6 +47,10 @@ chown -R mongodb:mongodb ${dst_logs}/mongodb
 chown -R mongodb:mongodb ${dst_root}/bin/mongodbctl
 chmod 755 ${dst_root}/bin/mongodbctl
 
+cd $dst_root
+rm -f THIRD-PARTY-NOTICES
+rm -f README
+rm -f GNU-AGPL-3.0
 
 cd ../
 echo "============================ mongodb finished ================================"

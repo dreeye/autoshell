@@ -56,7 +56,11 @@ if [ ! -d "${dst_etc}/supervisor" ]; then
     echo "mkdir etc/supervisor dir!!!"
     mkdir -p ${dst_etc}/supervisor
 fi
-echo_supervisord_conf > ${dst_etc}/supervisor/supervisord.conf
+# echo_supervisord_conf > ${dst_etc}/supervisor/supervisord.conf
+cd $conf_dir/supervisor
+cp -rf * ${dst_etc}/supervisor
+chown -R python:python ${dst_etc}/supervisor
+
 
 if [ ! -d "${dst_logs}/supervisor" ]; then
     echo "mkdir var/logs/supervisor dir!!!"
