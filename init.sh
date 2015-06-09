@@ -1,4 +1,9 @@
 #!/bin/bash
+# Check if user is root
+if [ $(id -u) != "0" ]; then
+    echo "Error: You must be root to run this script, please use root to install lnmp"
+    exit 1
+fi
 
 # 安装路径
 dst_root=$(tail -n 1 DST_ROOT)
@@ -17,15 +22,6 @@ if [ ! -d "$dst_root" ]; then
     mkdir -p $dst_run
     mkdir -p $dst_tmp
     echo 'all files will install to' $dst_root
-fi
-
-PATH=$dst_root/bin:$dst_root/sbin:~/bin:$PATH
-export PATH
-
-# Check if user is root
-if [ $(id -u) != "0" ]; then
-    echo "Error: You must be root to run this script, please use root to install lnmp"
-    exit 1
 fi
 
 clear
@@ -87,7 +83,7 @@ function init()
         sed -i '$a alias utime='\''sudo ntpdate -u pool.ntp.org'\''' /etc/bashrc
     fi
 
-    root_path=$(grep "PATH=$dst_root/bin:$dst_root/sbin:~/bin:$PATH" /etc/bashrc)
+    root_path=$(grep "$dst_root/bin" /etc/bashrc)
 
     if [ "$root_path" == "" ]; then
         sed -i "\$a PATH=$dst_root/bin:$dst_root/sbin:~/bin:$PATH" /etc/bashrc
