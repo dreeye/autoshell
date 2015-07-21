@@ -1,0 +1,24 @@
+# 启动
+function_uwsgi-start() {
+    /Maov/bin/uwsgi --ini /Maov/etc/uwsgi/s.maov.cc.ini > /dev/null
+}
+
+# 重新加载
+function_uwsgi-reload() {
+    /Maov/bin/uwsgi --reload /Maov/var/run/uwsgi/uwsgi.pid
+}
+
+# 停止
+function_uwsgi-stop() {
+    kill -HUP `cat /Maov/var/run/uwsgi/uwsgi.pid`
+}
+
+if [ "$1" = "start" ]; then
+    function_uwsgi-start
+elif [ "$1" = "stop" ]; then 
+    function_uwsgi-stop
+elif [ "$1" = "restart" ]; then
+    function_uwsgi-reload
+else
+    printf "Usage: /MAOV/bin/uwsgictl {start|stop|restart}\n"
+fi
