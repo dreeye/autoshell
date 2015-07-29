@@ -1,0 +1,9 @@
+cd /Maov/htdocs/maov/maov
+
+if [ "$1" = "start" ]; then
+    /Maov/bin/gunicorn -c /Maov/etc/gunicorn/s.maov.cc.ini website:app > /dev/null
+elif [ "$1" = "stop" ]; then 
+    kill -HUP `cat /Maov/var/run/gunicorn/gunicorn.pid`
+else
+    printf "Usage: /Maov/etc/gunicorn/gunicorn {start|stop}\n"
+fi
