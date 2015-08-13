@@ -27,7 +27,11 @@ make && make install
 # rm -rf ./node-v0.12.4
 
 #install front-build modules. eg:grunt
-echo "install grunt by npm"
-npm install grunt -g
+echo "install grunt-cli by npm"
+npm install grunt-cli -g
 echo "install bower by npm"
 npm install bower -g
+echo "install sass"
+gem sources --remove http://rubygems.org/
+gem sources -a https://ruby.taobao.org/
+gem install sass
