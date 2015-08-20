@@ -82,11 +82,16 @@ function init()
     if [ "$alias_utime" == "" ]; then
         sed -i '$a alias utime='\''sudo ntpdate -u pool.ntp.org'\''' /etc/bashrc
     fi
+    goroot=$(grep "$GOROOT" /etc/bashrc)
+
+    if [ "$goroot" == "" ]; then
+        sed -i '$a export $GOROOT=$dst_root' /etc/bashrc
+    fi
 
     root_path=$(grep "$dst_root/bin" /etc/bashrc)
 
     if [ "$root_path" == "" ]; then
-        sed -i "\$a PATH=$dst_root/bin:$dst_root/sbin:~/bin:$PATH" /etc/bashrc
+        sed -i "\$a PATH=$dst_root/bin:$dst_root/sbin:~/bin:$GOROOT/bin:$PATH" /etc/bashrc
         sed -i "\$a export PATH" /etc/bashrc
     fi
 
