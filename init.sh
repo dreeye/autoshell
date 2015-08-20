@@ -85,7 +85,7 @@ function init()
     goroot=$(grep "$GOROOT" /etc/bashrc)
 
     if [ "$goroot" == "" ]; then
-        sed -i '$a export $GOROOT=$dst_root' /etc/bashrc
+        sed -i '$a export $GOROOT=$dst_root/go' /etc/bashrc
     fi
 
     root_path=$(grep "$dst_root/bin" /etc/bashrc)
