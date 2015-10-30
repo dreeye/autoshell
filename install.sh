@@ -5,6 +5,17 @@ if [ $(id -u) != "0" ]; then
     exit 1
 fi
 
+#shell dir
+shell_dir=$(pwd)
+if [ ! -d "${shell_dir}/software" ]; then
+    mkdir $shell_dir'/software'
+fi
+
+if [ ! -d "conf" ]; then
+    echo 'please cd PNshell dir'
+    exit 0
+fi
+
 . include/common.sh
 
 Get_Dist_Name
@@ -45,19 +56,7 @@ echo "========================================================================="
 grep '^web' /etc/group || /usr/sbin/groupadd web
 
 
-#shell dir
-shell_dir=$(pwd)
-if [ ! -d "conf" ]; then
-    echo 'please cd PNshell dir'
-    exit 0
-fi
-if [ ! -d "${shell_dir}/software" ]; then
-    mkdir $shell_dir'/software'
-fi
 
-# software dir
-soft_dir=$shell_dir'/software'
-echo -e "\n software directory is $soft_dir"
 # conf dir
 conf_dir=$shell_dir'/conf'
 echo -e "\n config file directory is $conf_dir"

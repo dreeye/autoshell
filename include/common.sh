@@ -146,3 +146,27 @@ Disable_Selinux()
         sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
     fi
 }
+
+Tar_Cd()
+{
+    local FileName=$1
+    local DirName=$2
+    cd ${shell_dir}/src
+    [[ -d "${DirName}" ]] && rm -rf ${DirName}
+    echo "Uncompress ${FileName}..."
+    tar zxf ${FileName}
+    echo "cd ${DirName}..."
+    cd ${DirName}
+}
+
+Download_Files()
+{
+    local URL=$1
+    local FileName=$2
+    if [ -s "${FileName}" ]; then
+        echo "${FileName} [found]"
+    else
+        echo "Error: ${FileName} not found!!!download now..."
+        wget -c ${URL}
+    fi
+}
