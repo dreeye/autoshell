@@ -80,33 +80,38 @@ function init()
     Disable_Selinux
 
     # create common.sh 
-    if [ ! -d "/etc/profile.d/dreeye.sh" ]; then
-        touch '/etc/profile.d/dreeye.sh'
+    if [ ! -s "/etc/profile.d/common.sh" ]; then
+        touch '/etc/profile.d/common.sh'
     fi
 
     alias_color=$(grep 'alias grep='\''grep --color=auto'\''' /etc/profile.d/common.sh)
 
     if [ "$alias_color" == "" ]; then
-        sed -i '$a alias grep='\''grep --color=auto'\''' /etc/profile.d/common.sh
+        # sed -i '$a alias grep='\''grep --color=auto'\''' /etc/profile.d/common.sh
+        echo 'alias grep='\''grep --color=auto'\''' >> /etc/profile.d/common.sh
     fi
 
     alias_utime=$(grep 'alias utime='\''sudo ntpdate -u pool.ntp.org'\''' /etc/profile.d/common.sh)
 
     if [ "$alias_utime" == "" ]; then
-        sed -i '$a alias utime='\''sudo ntpdate -u pool.ntp.org'\''' /etc/profile.d/common.sh
+        # sed -i '$a alias utime='\''sudo ntpdate -u pool.ntp.org'\''' /etc/profile.d/common.sh
+        echo 'alias utime='\''sudo ntpdate -u pool.ntp.org'\''' >> /etc/profile.d/common.sh
     fi
 
     goroot=$(grep "$GOROOT" /etc/profile.d/common.sh)
 
     if [ "$goroot" == "" ]; then
-        sed -i '$a export $GOROOT=$dst_root/go' /etc/profile.d/common.sh
+        # sed -i '$a export $GOROOT=$dst_root/go' /etc/profile.d/common.sh
+        echo 'export $GOROOT=$dst_root/go' >> /etc/profile.d/common.sh
     fi
 
     root_path=$(grep "$dst_root/bin" /etc/profile.d/common.sh)
 
     if [ "$root_path" == "" ]; then
-        sed -i "\$a PATH=$dst_root/bin:$dst_root/sbin:~/bin:$GOROOT/bin:$PATH" /etc/profile.d/common.sh
-        sed -i "\$a export PATH" /etc/profile.d/common.sh
+        # sed -i "\$a PATH=$dst_root/bin:$dst_root/sbin:~/bin:$GOROOT/bin:$PATH" /etc/profile.d/common.sh
+        # sed -i "\$a export PATH" /etc/profile.d/common.sh
+        echo "PATH=$dst_root/bin:$dst_root/sbin:~/bin:$GOROOT/bin:$PATH" >> /etc/profile.d/common.sh
+        echo "export PATH" /etc/profile.d/common.sh
     fi
     
 
