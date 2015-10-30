@@ -95,8 +95,9 @@ function install_php()
 {
 echo "============================Install PHP 5.3.28================================"
 cd $soft_dir
-export PHP_AUTOCONF=/usr/local/autoconf-2.13/bin/autoconf
-export PHP_AUTOHEADER=/usr/local/autoconf-2.13/bin/autoheader
+# yum 安装autoconf,试着不加这些变量
+# export PHP_AUTOCONF=/usr/local/autoconf-2.13/bin/autoconf
+# export PHP_AUTOHEADER=/usr/local/autoconf-2.13/bin/autoheader
 tar zxf php-5.3.28.tar.gz
 cd php-5.3.28/
 ./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-magic-quotes --enable-safe-mode --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --without-pear --with-gettext --disable-fileinfo
@@ -168,11 +169,13 @@ function install_depend()
 {
 echo "============================Install Depend================================="
 cd $soft_dir
-tar zxf autoconf-2.13.tar.gz
-cd autoconf-2.13/
-./configure --prefix=/usr/local/autoconf-2.13
-make && make install
-cd ../
+# init中会yum autoconf,试下不编译会怎样
+#tar zxf autoconf-2.13.tar.gz
+#cd autoconf-2.13/
+#./configure --prefix=/usr/local/autoconf-2.13
+#make && make install
+#cd ../
+
 
 tar zxf libiconv-1.14.tar.gz
 cd libiconv-1.14/
