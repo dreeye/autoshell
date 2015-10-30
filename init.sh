@@ -7,6 +7,8 @@ fi
 
 . include/common.sh
 
+Get_Dist_Name
+
 # Linux版本
 if [ "${DISTRO}" = "unknow" ]; then
     Echo_Red "Unable to get Linux distribution name, or do NOT support the current distribution."
@@ -77,29 +79,35 @@ function init()
     #Disable SeLinux
     Disable_Selinux
 
-    alias_color=$(grep 'alias grep='\''grep --color=auto'\''' /etc/bashrc)
+    # create common.sh 
+    if [ ! -d "/etc/profile.d/dreeye.sh" ]; then
+        touch '/etc/profile.d/dreeye.sh'
+    fi
+
+    alias_color=$(grep 'alias grep='\''grep --color=auto'\''' /etc/profile.d/common.sh)
 
     if [ "$alias_color" == "" ]; then
-        sed -i '$a alias grep='\''grep --color=auto'\''' /etc/bashrc
+        sed -i '$a alias grep='\''grep --color=auto'\''' /etc/profile.d/common.sh
     fi
 
-    alias_utime=$(grep 'alias utime='\''sudo ntpdate -u pool.ntp.org'\''' /etc/bashrc)
+    alias_utime=$(grep 'alias utime='\''sudo ntpdate -u pool.ntp.org'\''' /etc/profile.d/common.sh)
 
     if [ "$alias_utime" == "" ]; then
-        sed -i '$a alias utime='\''sudo ntpdate -u pool.ntp.org'\''' /etc/bashrc
+        sed -i '$a alias utime='\''sudo ntpdate -u pool.ntp.org'\''' /etc/profile.d/common.sh
     fi
-    goroot=$(grep "$GOROOT" /etc/bashrc)
+
+    goroot=$(grep "$GOROOT" /etc/profile.d/common.sh)
 
     if [ "$goroot" == "" ]; then
-        sed -i '$a export $GOROOT=$dst_root/go' /etc/bashrc
+        sed -i '$a export $GOROOT=$dst_root/go' /etc/profile.d/common.sh
     fi
 
-    root_path=$(grep "$dst_root/bin" /etc/bashrc)
+    root_path=$(grep "$dst_root/bin" /etc/profile.d/common.sh)
 
     if [ "$root_path" == "" ]; then
-        sed -i "\$a PATH=$dst_root/bin:$dst_root/sbin:~/bin:$GOROOT/bin:$PATH" /etc/bashrc
-        sed -i "\$a export PATH" /etc/bashrc
+        sed -i "\$a PATH=$dst_root/bin:$dst_root/sbin:~/bin:$GOROOT/bin:$PATH" /etc/profile.d/common.sh
+        sed -i "\$a export PATH" /etc/profile.d/common.sh
     fi
-
+    
 
 }
