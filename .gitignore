@@ -1,6 +1,7 @@
 .DS_Store
 
 software/*
+!software/index.html
 !.htaccess
 *.swn
 *.swo

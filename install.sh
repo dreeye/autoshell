@@ -5,16 +5,17 @@ if [ $(id -u) != "0" ]; then
     exit 1
 fi
 
+if [ ! -d "conf" ]; then
+    echo 'please cd PNshell dir'
+    exit 0
+fi
+
 #shell dir
 shell_dir=$(pwd)
 if [ ! -d "${shell_dir}/software" ]; then
     mkdir $shell_dir'/software'
 fi
 
-if [ ! -d "conf" ]; then
-    echo 'please cd PNshell dir'
-    exit 0
-fi
 
 . include/common.sh
 
@@ -63,6 +64,8 @@ echo -e "\n config file directory is $conf_dir"
 
 function init()
 {
+    # 提示安装,并加载version.sh
+    Press_Install
     # 打印系统内存信息,CentOS版本
     Print_Sys_Info
 
@@ -75,43 +78,12 @@ function init()
     CentOS_RemoveAMP
     # 初始化yum更新
     CentOS_Dependent
-    #Disable SeLinux
+    # Disable SeLinux
     Disable_Selinux
+    # init common shell
+    Init_Shell
+    Check_Download
 
-    # create common.sh 
-    if [ ! -s "/etc/profile.d/common.sh" ]; then
-        touch '/etc/profile.d/common.sh'
-    fi
-
-    alias_color=$(grep 'alias grep='\''grep --color=auto'\''' /etc/profile.d/common.sh)
-
-    if [ "$alias_color" == "" ]; then
-        # sed -i '$a alias grep='\''grep --color=auto'\''' /etc/profile.d/common.sh
-        echo 'alias grep='\''grep --color=auto'\''' >> /etc/profile.d/common.sh
-    fi
-
-    alias_utime=$(grep 'alias utime='\''sudo ntpdate -u pool.ntp.org'\''' /etc/profile.d/common.sh)
-
-    if [ "$alias_utime" == "" ]; then
-        # sed -i '$a alias utime='\''sudo ntpdate -u pool.ntp.org'\''' /etc/profile.d/common.sh
-        echo 'alias utime='\''sudo ntpdate -u pool.ntp.org'\''' >> /etc/profile.d/common.sh
-    fi
-
-    goroot=$(grep "$GOROOT" /etc/profile.d/common.sh)
-
-    if [ "$goroot" == "" ]; then
-        # sed -i '$a export $GOROOT=$dst_root/go' /etc/profile.d/common.sh
-        echo 'export $GOROOT=$dst_root/go' >> /etc/profile.d/common.sh
-    fi
-
-    root_path=$(grep "$dst_root/bin" /etc/profile.d/common.sh)
-
-    if [ "$root_path" == "" ]; then
-        # sed -i "\$a PATH=$dst_root/bin:$dst_root/sbin:~/bin:$GOROOT/bin:$PATH" /etc/profile.d/common.sh
-        # sed -i "\$a export PATH" /etc/profile.d/common.sh
-        echo "PATH=$dst_root/bin:$dst_root/sbin:~/bin:$GOROOT/bin:$PATH" >> /etc/profile.d/common.sh
-        echo "export PATH" /etc/profile.d/common.sh
-    fi
     
 
 }
