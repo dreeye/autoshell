@@ -5,19 +5,8 @@ if [ $(id -u) != "0" ]; then
     exit 1
 fi
 
-if [ ! -d "conf" ]; then
-    echo 'please cd PNshell dir'
-    exit 0
-fi
-
-#shell dir
-shell_dir=$(pwd)
-if [ ! -d "${shell_dir}/software" ]; then
-    mkdir $shell_dir'/software'
-fi
-
-
 . include/common.sh
+. include/init.sh
 
 Get_Dist_Name
 
@@ -28,17 +17,14 @@ if [ "${DISTRO}" = "unknow" ]; then
 fi
 
 
-# 安装路径
-dst_root=$(tail -n 1 DST_ROOT)
-dst_var=$dst_root/var
-dst_etc=$dst_root/etc
-dst_htdocs=$dst_root/htdocs
-# var/
-dst_logs=$dst_var/logs
-dst_run=$dst_var/run
-dst_tmp=$dst_var/tmp
+
+dst_root=$(tail -n 1 DST_ROOT) # 安装路径
+dst_etc=$dst_root/etc # 配置文件
+dst_htdocs=$dst_root/htdocs 
+dst_logs=$dst_root/var/logs
+dst_run=$dst_root/var/run # nginx pid
+dst_tmp=$dst_root/var/tmp # nginx tmp
 if [ ! -d "$dst_root" ]; then
-    mkdir $dst_var
     mkdir $dst_etc
     mkdir $dst_htdocs
     mkdir -p $dst_logs
@@ -55,7 +41,6 @@ echo "========================================================================="
 
 # 添加 web 用户组, 跟网络操作相关的用户, 都应该属于 web 组
 grep '^web' /etc/group || /usr/sbin/groupadd web
-
 
 
 # conf dir
