@@ -84,5 +84,5 @@ function init()
 
 }
 
-    Press_Install
-# init 2>&1 | tee /root/as-init-install.log
+#    Press_Install
+init 2>&1 | tee /root/as-init-install.log
