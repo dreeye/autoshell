@@ -68,6 +68,12 @@ function init()
     # init common shell
     Init_Shell
     Check_Download
+    Install_Autoconf
+    Install_Libiconv
+    Install_Libmcrypt
+    Install_Mhash
+    Install_Mcrypt
+    Install_Pcre
 
     
 

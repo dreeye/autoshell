@@ -127,31 +127,13 @@ Set_Timezone()
     ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 }
 
-# 初始化yum更新
-CentOS_Dependent()
-{
-    cp /etc/yum.conf /etc/yum.conf.lnmp
-    sed -i 's:exclude=.*:exclude=:g' /etc/yum.conf
 
-    Echo_Blue "[+] Yum installing dependent packages..."
-    for packages in gcc gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel libxslt-devel libffi-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers zip unzip man perl-CPAN cmake bison wget mlocate git openssh-server openssh-clients patch make gcc-g77 flex file libtool libtool-libs kernel-devel libpng10 libpng10-devel gd gd-devel fonts-chinese gettext gettext-devel gmp-devel pspell-devel libcap diffutils libpcap-devel readline-devel lrzsz screen rubygems tar libevent libevent-devel net-tools libc-client-devel psmisc libXpm-devel c-ares-devel;
-    do yum -y install $packages; done
-
-    mv -f /etc/yum.conf.lnmp /etc/yum.conf
-}
-
-Disable_Selinux()
-{
-    if [ -s /etc/selinux/config ]; then
-        sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
-    fi
-}
 
 Tar_Cd()
 {
     local FileName=$1
     local DirName=$2
-    cd ${shell_dir}/src
+    cd ${shell_dir}/software
     [[ -d "${DirName}" ]] && rm -rf ${DirName}
     echo "Uncompress ${FileName}..."
     tar zxf ${FileName}

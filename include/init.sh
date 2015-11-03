@@ -2,14 +2,18 @@ Check_Download()
 {
     Echo_Blue "[+] Downloading files..."
     cd ${shell_dir}/software
-    Download_Files ${Pcre_Mirror} ${Pcre_Ver}
-    Download_Files ${Libiconv_Mirror} ${Libiconv_Ver}
-    Download_Files ${LibMcrypt_Mirror} ${LibMcrypt_Ver}
-    Download_Files ${Mcypt_Mirror} ${Mcypt_Ver}
-    Download_Files ${Php_Mirror} ${Php_Ver}
-    Download_Files ${Autoconf_Mirror} ${Autoconf_Ver}
-    Download_Files ${Mash_Mirror} ${Mash_Ver}
-    Download_Files ${Libmemcached_Mirror} ${Libmemcached_Ver}
+    Download_Files ${Pcre_Mirror} ${Pcre_Ver}.tar.gz
+    Download_Files ${Libiconv_Mirror} ${Libiconv_Ver}.tar.gz
+    Download_Files ${LibMcrypt_Mirror} ${LibMcrypt_Ver}.tar.gz
+    Download_Files ${Mcypt_Mirror} ${Mcypt_Ver}.tar.gz
+    Download_Files ${Php_Mirror} ${Php_Ver}.tar.gz
+    Download_Files ${Autoconf_Mirror} ${Autoconf_Ver}.tar.gz
+    Download_Files ${Mhash_Mirror} ${Mhash_Ver}.tar.gz
+    Download_Files ${Libmemcached_Mirror} ${Libmemcached_Ver}.tar.gz
+    Download_Files ${PHPMemcached_Mirror} ${PHPMemcached_Ver}.tgz
+    Download_Files ${Memcached_Mirror} ${Memcached_Ver}.tar.gz
+    Download_Files ${ImageMagick_Mirror} ${ImageMagick_Ver}.tar.gz
+    Download_Files ${Imagick_Mirror} ${Imagick_Ver}.tgz
 }
 
 Press_Install()
@@ -60,4 +64,90 @@ Init_Shell()
         echo "export PATH" /etc/profile.d/common.sh
     fi
 
+}
+
+# 初始化yum更新
+CentOS_Dependent()
+{
+    cp /etc/yum.conf /etc/yum.conf.lnmp
+    sed -i 's:exclude=.*:exclude=:g' /etc/yum.conf
+
+    Echo_Blue "[+] Yum installing dependent packages..."
+    for packages in gcc gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel libxslt-devel libffi-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers zip unzip man perl-CPAN cmake bison wget mlocate git openssh-server openssh-clients patch make gcc-g77 flex file libtool libtool-libs kernel-devel libpng10 libpng10-devel gd gd-devel fonts-chinese gettext gettext-devel gmp-devel pspell-devel libcap diffutils libpcap-devel readline-devel lrzsz screen rubygems tar libevent libevent-devel net-tools libc-client-devel psmisc libXpm-devel c-ares-devel;
+    do yum -y install $packages; done
+
+    mv -f /etc/yum.conf.lnmp /etc/yum.conf
+}
+
+Disable_Selinux()
+{
+    if [ -s /etc/selinux/config ]; then
+        sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+    fi
+}
+
+Install_Autoconf()
+{
+    Echo_Blue "[+] Installing ${Autoconf_Ver}"
+    Tar_Cd ${Autoconf_Ver}.tar.gz ${Autoconf_Ver}
+    ./configure --prefix=${dst_root}
+    make && make install
+}
+
+Install_Libiconv()
+{
+    Echo_Blue "[+] Installing ${Libiconv_Ver}"
+    Tar_Cd ${Libiconv_Ver}.tar.gz ${Libiconv_Ver}
+    ./configure --prefix=${dst_root}
+    make && make install
+}
+
+Install_Libmcrypt()
+{
+    Echo_Blue "[+] Installing ${LibMcrypt_Ver}"
+    Tar_Cd ${LibMcrypt_Ver}.tar.gz ${LibMcrypt_Ver}
+    ./configure
+    make && make install
+    /sbin/ldconfig
+    cd libltdl/
+    ./configure --enable-ltdl-install
+    make && make install
+    ln -s /usr/local/lib/libmcrypt.la /usr/lib/libmcrypt.la
+    ln -s /usr/local/lib/libmcrypt.so /usr/lib/libmcrypt.so
+    ln -s /usr/local/lib/libmcrypt.so.4 /usr/lib/libmcrypt.so.4
+    ln -s /usr/local/lib/libmcrypt.so.4.4.8 /usr/lib/libmcrypt.so.4.4.8
+    ldconfig
+}
+
+Install_Mcrypt()
+{
+    Echo_Blue "[+] Installing ${Mcypt_Ver}"
+    Tar_Cd ${Mcypt_Ver}.tar.gz ${Mcypt_Ver}
+    ./configure
+    make && make install
+}
+
+Install_Mhash()
+{
+    Echo_Blue "[+] Installing ${Mash_Ver}"
+    Tar_Cd ${Mash_Ver}.tar.gz ${Mash_Ver}
+    ./configure
+    make && make install
+    ln -s /usr/local/lib/libmhash.a /usr/lib/libmhash.a
+    ln -s /usr/local/lib/libmhash.la /usr/lib/libmhash.la
+    ln -s /usr/local/lib/libmhash.so /usr/lib/libmhash.so
+    ln -s /usr/local/lib/libmhash.so.2 /usr/lib/libmhash.so.2
+    ln -s /usr/local/lib/libmhash.so.2.0.1 /usr/lib/libmhash.so.2.0.1
+    ldconfig
+}
+
+Install_Pcre()
+{
+    Cur_Pcre_Ver=`pcre-config --version`
+    if echo "${Cur_Pcre_Ver}" | grep -vEqi '^8.';then
+        Echo_Blue "[+] Installing ${Pcre_Ver}"
+        Tar_Cd ${Pcre_Ver}.tar.gz ${Pcre_Ver}
+        ./configure
+        make && make install
+    fi
 }
