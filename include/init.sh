@@ -24,7 +24,7 @@ Press_Install()
     stty -icanon -echo min 1 time 0
     dd count=1 2>/dev/null
     stty ${OLDCONFIG}
-    . include/version.sh
+    . include/mirror.sh
 }
 
 Init_Shell()
