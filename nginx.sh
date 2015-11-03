@@ -15,9 +15,9 @@ ls ${dst_tmp}/nginx || mkdir ${dst_tmp}/nginx
 # pid
 ls ${dst_run}/nginx || mkdir ${dst_run}/nginx
 ls ${dst_log}/nginx || mkdir ${dst_log}/nginx
-echo ${Nginx_Ver}
-exit
+# echo ${Nginx_Ver}
 Tar_Cd ${Nginx_Ver}.tar.gz ${Nginx_Ver}
+exit
 
 ./configure --user=nginx --group=web --prefix=${dst_root} --conf-path=${dst_etc}/nginx/nginx.conf --with-pcre=${shell_dir}/software/pcre-8.37 --error-log-path=${dst_logs}/nginx/error.log --with-http_stub_status_module --with-http_ssl_module --with-http_spdy_module --with-http_realip_module --with-http_addition_module --with-http_sub_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_auth_request_module --with-http_random_index_module --with-http_secure_link_module
 
