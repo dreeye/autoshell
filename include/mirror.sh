@@ -6,14 +6,14 @@ Libiconv_Ver='libiconv-1.14'
 Libiconv_Mirror='http://ftp.gnu.org/gnu/libiconv/libiconv-1.14.tar.gz'
 
 LibMcrypt_Ver='libmcrypt-2.5.8'
-LibMcrypt_Mirror='http://sourceforge.net/projects/mcrypt/files/Libmcrypt/2.5.8/libmcrypt-2.5.8.tar.gz/download'
+LibMcrypt_Mirror='http://sourceforge.net/projects/mcrypt/files/Libmcrypt/2.5.8/libmcrypt-2.5.8.tar.gz'
 
 
 Mcypt_Ver='mcrypt-2.6.8'
-Mcypt_Mirror='http://sourceforge.net/projects/mcrypt/files/MCrypt/2.6.8/mcrypt-2.6.8.tar.gz/download'
+Mcypt_Mirror='http://sourceforge.net/projects/mcrypt/files/MCrypt/2.6.8/mcrypt-2.6.8.tar.gz'
 
 Php_Ver='php-5.6.15'
-Php_Mirror='http://cn2.php.net/get/php-5.6.15.tar.gz/from/this/mirror'
+Php_Mirror='http://cn2.php.net/get/php-5.6.15.tar.gz'
 
 Autoconf_Ver='autoconf-2.13'
 Autoconf_Mirror='http://ftp.gnu.org/gnu/autoconf/autoconf-2.13.tar.gz'

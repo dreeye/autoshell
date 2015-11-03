@@ -83,4 +83,11 @@ function init()
 
 }
 
-Check_Download
+Install_Autoconf
+Install_Libiconv
+Install_Libmcrypt
+Install_Mhash
+Install_Mcrypt
+Install_Pcre
+
+CentOS_Lib_Opt
