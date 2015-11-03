@@ -1,4 +1,5 @@
-. install.sh
+. ./install.sh
+clear
 
 
 function install_nginx()
