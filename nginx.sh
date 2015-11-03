@@ -28,12 +28,12 @@ cd ../
 # rm -f ${dst_etc}/nginx/nginx.conf
 cd $conf_dir
 cp nginx/nginx.conf ${dst_etc}/nginx/nginx.conf
-mkdir ${dst_etc}/nginx/common/
+ls ${dst_etc}/nginx/common/ || mkdir ${dst_etc}/nginx/common/
 cp nginx/error.conf ${dst_etc}/nginx/common/
 
 #vhost
 cd $conf_dir
-mkdir  ${dst_etc}/nginx/vhost
+ls ${dst_etc}/nginx/vhost || mkdir  ${dst_etc}/nginx/vhost
 cp nginx/vhost_www.test.cc.conf ${dst_etc}/nginx/vhost/
 chmod +w ${dst_etc}/nginx/vhost
 chown -R nginx:web ${dst_etc}/nginx/vhost
