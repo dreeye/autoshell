@@ -82,4 +82,5 @@ function init()
     
 
 }
-init
+
+init 2>&1 | tee /root/as-init-install.log

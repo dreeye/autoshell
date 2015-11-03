@@ -129,8 +129,8 @@ Install_Mcrypt()
 
 Install_Mhash()
 {
-    Echo_Blue "[+] Installing ${Mash_Ver}"
-    Tar_Cd ${Mash_Ver}.tar.gz ${Mash_Ver}
+    Echo_Blue "[+] Installing ${Mhash_Ver}"
+    Tar_Cd ${Mhash_Ver}.tar.gz ${Mhash_Ver}
     ./configure
     make && make install
     ln -s /usr/local/lib/libmhash.a /usr/lib/libmhash.a
