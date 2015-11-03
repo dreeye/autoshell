@@ -83,4 +83,4 @@ function init()
 
 }
 
-init
+Check_Download

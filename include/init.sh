@@ -1,6 +1,7 @@
 Check_Download()
 {
     Echo_Blue "[+] Downloading files..."
+    . include/mirror.sh
     cd ${shell_dir}/software
     Download_Files ${Pcre_Mirror} ${Pcre_Ver}.tar.gz
     Download_Files ${Libiconv_Mirror} ${Libiconv_Ver}.tar.gz
@@ -24,7 +25,6 @@ Press_Install()
     stty -icanon -echo min 1 time 0
     dd count=1 2>/dev/null
     stty ${OLDCONFIG}
-    . include/mirror.sh
 }
 
 Init_Shell()
