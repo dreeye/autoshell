@@ -7,6 +7,7 @@ fi
 
 . include/common.sh
 . include/init.sh
+. include/mirror.sh
 
 Get_Dist_Name
 
