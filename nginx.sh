@@ -34,7 +34,7 @@ cp nginx/error.conf ${dst_etc}/nginx/common/
 #vhost
 cd $conf_dir
 mkdir  ${dst_etc}/nginx/vhost
-cp nginx/vhost_www.maov.lo.conf ${dst_etc}/nginx/vhost/
+cp nginx/vhost_www.test.cc.conf ${dst_etc}/nginx/vhost/
 chmod +w ${dst_etc}/nginx/vhost
 chown -R nginx:web ${dst_etc}/nginx/vhost
 
