@@ -9,14 +9,14 @@ echo "============================Install Nginx=================================
 grep '^nginx' /etc/passwd || /usr/sbin/useradd -s /sbin/nologin --groups=web nginx 
 
 # 配置文件目录
-mkdir ${dst_etc}/nginx
+ll ${dst_etc}/nginx || mkdir ${dst_etc}/nginx
 # 缓存文件
-mkdir ${dst_tmp}/nginx
+ll ${dst_tmp}/nginx || mkdir ${dst_tmp}/nginx
 # pid
-mkdir ${dst_run}/nginx
-mkdir ${dst_log}/nginx
+ll ${dst_run}/nginx || mkdir ${dst_run}/nginx
+ll ${dst_log}/nginx || mkdir ${dst_log}/nginx
 
-Tar_Cd ${Nginx_Mirror} ${Nginx_Ver}
+Tar_Cd ${Nginx_Ver}.tar.gz ${Nginx_Ver}
 
 ./configure --user=nginx --group=web --prefix=${dst_root} --conf-path=${dst_etc}/nginx/nginx.conf --with-pcre=${shell_dir}/software/pcre-8.37 --error-log-path=${dst_logs}/nginx/error.log --with-http_stub_status_module --with-http_ssl_module --with-http_spdy_module --with-http_realip_module --with-http_addition_module --with-http_sub_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_auth_request_module --with-http_random_index_module --with-http_secure_link_module
 
