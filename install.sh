@@ -43,8 +43,10 @@ echo "========================================================================="
 grep '^web' /etc/group || /usr/sbin/groupadd web
 
 
+shell_dir=$(pwd)
 # conf dir
 conf_dir=$shell_dir'/conf'
+
 echo -e "\n config file directory is $conf_dir"
 
 function init()
@@ -74,6 +76,8 @@ function init()
     Install_Mhash
     Install_Mcrypt
     Install_Pcre
+
+    CentOS_Lib_Opt
 
     
 

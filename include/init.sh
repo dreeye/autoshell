@@ -151,3 +151,42 @@ Install_Pcre()
         make && make install
     fi
 }
+
+CentOS_Lib_Opt()
+{
+    if [ "${Is_64bit}" = "y" ] ; then
+    ln -s /usr/lib64/libpng.* /usr/lib/
+    ln -s /usr/lib64/libjpeg.* /usr/lib/
+    fi
+
+    ulimit -v unlimited
+
+    if [ `grep -L "/lib"    '/etc/ld.so.conf'` ]; then
+        echo "/lib" >> /etc/ld.so.conf
+    fi
+
+    if [ `grep -L '/usr/lib'    '/etc/ld.so.conf'` ]; then
+        echo "/usr/lib" >> /etc/ld.so.conf
+        #echo "/usr/lib/openssl/engines" >> /etc/ld.so.conf
+    fi
+
+    if [ -d "/usr/lib64" ] && [ `grep -L '/usr/lib64'    '/etc/ld.so.conf'` ]; then
+        echo "/usr/lib64" >> /etc/ld.so.conf
+        #echo "/usr/lib64/openssl/engines" >> /etc/ld.so.conf
+    fi
+
+    if [ `grep -L '/usr/local/lib'    '/etc/ld.so.conf'` ]; then
+        echo "/usr/local/lib" >> /etc/ld.so.conf
+    fi
+
+    ldconfig
+
+    cat >>/etc/security/limits.conf<<eof
+* soft nproc 65535
+* hard nproc 65535
+* soft nofile 65535
+* hard nofile 65535
+eof
+
+    echo "fs.file-max=65535" >> /etc/sysctl.conf
+}
