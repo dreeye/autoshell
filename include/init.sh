@@ -14,6 +14,7 @@ Check_Download()
     Download_Files ${Memcached_Mirror} ${Memcached_Ver}.tar.gz
     Download_Files ${ImageMagick_Mirror} ${ImageMagick_Ver}.tar.gz
     Download_Files ${Imagick_Mirror} ${Imagick_Ver}.tgz
+    Download_Files ${Nginx_Mirror} ${Nginx_Ver}.tgz
 }
 
 Press_Install()

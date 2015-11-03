@@ -41,6 +41,7 @@ echo "========================================================================="
 
 # 添加 web 用户组, 跟网络操作相关的用户, 都应该属于 web 组
 grep '^web' /etc/group || /usr/sbin/groupadd web
+grep '^git' /etc/passwd || /usr/sbin/useradd --groups=web git
 
 
 shell_dir=$(pwd)
