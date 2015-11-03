@@ -24,14 +24,14 @@ dst_htdocs=$dst_root/htdocs
 dst_logs=$dst_root/var/logs
 dst_run=$dst_root/var/run # nginx pid
 dst_tmp=$dst_root/var/tmp # nginx tmp
-if [ ! -d "$dst_root" ]; then
-    mkdir $dst_etc
-    mkdir $dst_htdocs
-    mkdir -p $dst_logs
-    mkdir -p $dst_run
-    mkdir -p $dst_tmp
-    echo 'all files will install to' $dst_root
-fi
+# if [ ! -d "$dst_root" ]; then
+mkdir $dst_etc
+mkdir $dst_htdocs
+mkdir -p $dst_logs
+mkdir -p $dst_run
+mkdir -p $dst_tmp
+echo 'all files will install to' $dst_root
+# fi
 
 clear
 echo "========================================================================="

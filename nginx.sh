@@ -52,3 +52,5 @@ if [ -s /sbin/iptables ]; then
 fi
 
 }
+
+install_nginx 2>&1 | tee /root/as-nginx-install.log
