@@ -1,6 +1,6 @@
 #!/bin/bash
 Pcre_Ver='pcre-8.37'
-Pcre_Mirror='http://sourceforge.net/projects/pcre/files/pcre/8.37/pcre-8.37.tar.gz/download'
+Pcre_Mirror='http://sourceforge.net/projects/pcre/files/pcre/8.37/pcre-8.37.tar.gz'
 
 Libiconv_Ver='libiconv-1.14'
 Libiconv_Mirror='http://ftp.gnu.org/gnu/libiconv/libiconv-1.14.tar.gz'
