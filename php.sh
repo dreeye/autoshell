@@ -46,7 +46,7 @@ Install_PHP_56()
     make ZEND_EXTRA_LIBS='-liconv'
     make install
 
-    # Ln_PHP_Bin
+    Ln_PHP_Bin
 
     echo "Copy new php configure file..."
     mkdir -p ${dst_root}/php/etc
