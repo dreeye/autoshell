@@ -15,9 +15,7 @@ Ln_PHP_Bin()
     ln -sf ${dst_root}/php/bin/phpize /usr/bin/phpize
     ln -sf ${dst_root}/php/bin/pear /usr/bin/pear
     ln -sf ${dst_root}/php/bin/pecl /usr/bin/pecl
-    if [ "${Stack}" = "lnmp" ]; then
-        ln -sf ${dst_root}/php/sbin/php-fpm /usr/bin/php-fpm
-    fi
+    ln -sf ${dst_root}/php/sbin/php-fpm /usr/bin/php-fpm
 }
 
 Pear_Pecl_Set()

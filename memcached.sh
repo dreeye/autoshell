@@ -87,13 +87,13 @@ Uninstall_Memcached()
 {
     echo "You will uninstall Memcached..."
     Press_Start
-    sed -i '/memcache.so/d' /usr/local/php/etc/php.ini
-    sed -i '/memcached.so/d' /usr/local/php/etc/php.ini
+    sed -i '/memcache.so/d' ${dst_root}php/etc/php.ini
+    sed -i '/memcached.so/d' ${dst_root}php/etc/php.ini
     Restart_PHP
     Remove_StartUp memcached
     echo "Delete Memcached files..."
-    rm -rf /usr/local/libmemcached
-    rm -rf /usr/local/memcached
+    rm -rf ${dst_root}libmemcached
+    rm -rf ${dst_root}memcached
     rm -rf /etc/init.d/memcached
     rm -rf /usr/bin/memcached
     if [ -s /sbin/iptables ]; then
