@@ -152,3 +152,19 @@ Download_Files()
         wget -c ${URL}
     fi
 }
+
+Get_PHP_Ext_Dir()
+{
+    Cur_PHP_Version=`${dst_root}/bin/php -r 'echo PHP_VERSION;'`
+    if echo "${Cur_PHP_Version}" | grep -Eqi '^5.2.'; then
+       zend_ext_dir="/usr/local/php/lib/php/extensions/no-debug-non-zts-20060613/"
+    elif echo "${Cur_PHP_Version}" | grep -Eqi '^5.3.'; then
+       zend_ext_dir="/usr/local/php/lib/php/extensions/no-debug-non-zts-20090626/"
+    elif echo "${Cur_PHP_Version}" | grep -Eqi '^5.4.'; then
+       zend_ext_dir="/usr/local/php/lib/php/extensions/no-debug-non-zts-20100525/"
+    elif echo "${Cur_PHP_Version}" | grep -Eqi '^5.5.'; then
+       zend_ext_dir="/usr/local/php/lib/php/extensions/no-debug-non-zts-20121212/"
+    elif echo "${Cur_PHP_Version}" | grep -Eqi '^5.6.'; then
+       zend_ext_dir="/usr/local/php/lib/php/extensions/no-debug-non-zts-20131226/"
+    fi
+}

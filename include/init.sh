@@ -155,6 +155,7 @@ Install_Pcre()
 
 CentOS_Lib_Opt()
 {
+    # common.sh 53
     if [ "${Is_64bit}" = "y" ] ; then
     ln -s /usr/lib64/libpng.* /usr/lib/
     ln -s /usr/lib64/libjpeg.* /usr/lib/

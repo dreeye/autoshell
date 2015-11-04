@@ -44,7 +44,6 @@ echo "========================================================================="
 grep '^web' /etc/group || /usr/sbin/groupadd web
 grep '^git' /etc/passwd || /usr/sbin/useradd --groups=web git
 
-
 shell_dir=$(pwd)
 # conf dir
 conf_dir=$shell_dir'/conf'
@@ -79,6 +78,7 @@ function init()
     Install_Mcrypt
     Install_Pcre
 
+    # 动态库软连接
     CentOS_Lib_Opt
 
     
