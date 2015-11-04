@@ -13,7 +13,7 @@ Install_PHPMemcached()
     cd ../
 
     Tar_Cd ${PHPMemcached_Ver}.tgz ${PHPMemcached_Ver}
-    /usr/local/php/bin/phpize
+    ${dst_root}/php/bin/phpize
     ./configure --with-php-config=${dst_root}/php/bin/php-config --enable-memcached --with-libmemcached-dir=${dst_root}/libmemcached
     make && make install
     cd ../
