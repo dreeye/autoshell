@@ -118,3 +118,5 @@ EOF
 # \cp ${cur_dir}/src/${Php_Ver}/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
 # chmod +x /etc/init.d/php-fpm
 }
+
+Install_PHP_56
