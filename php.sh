@@ -1,4 +1,6 @@
 #!/bin/bash
+. ./install.sh
+clear
 
 Export_PHP_Autoconf()
 {
