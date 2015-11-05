@@ -19,6 +19,20 @@ Install_PHPMemcached()
     cd ../
 }
 
+Export_PHP_Autoconf()
+{
+    export PHP_AUTOCONF=${dst_root}/autoconf/bin/autoconf
+    export PHP_AUTOHEADER=${dst_root}/autoconf/bin/autoheader
+}
+
+Install_Autoconf()
+{
+    Echo_Blue "[+] Installing ${Autoconf_Ver}"
+    Tar_Cd ${Autoconf_Ver}.tar.gz ${Autoconf_Ver}
+    ./configure --prefix=${dst_root}/autoconf
+    make && make install
+}
+
 Install_Memcached()
 {
 
@@ -109,5 +123,6 @@ Uninstall_Memcached()
     fi
     echo "Uninstall Memcached completed."
 }
-
+Install_Autoconf
+Export_PHP_Autoconf
 Install_Memcached

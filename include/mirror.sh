@@ -15,8 +15,8 @@ Mcypt_Mirror='http://sourceforge.net/projects/mcrypt/files/MCrypt/2.6.8/mcrypt-2
 Php_Ver='php-5.6.15'
 Php_Mirror='http://cn2.php.net/get/php-5.6.15.tar.gz'
 
-Autoconf_Ver='autoconf-2.13'
-Autoconf_Mirror='http://ftp.gnu.org/gnu/autoconf/autoconf-2.13.tar.gz'
+Autoconf_Ver='autoconf-2.69'
+Autoconf_Mirror='http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz'
 
 Mhash_Ver='mhash-0.9.9.9'
 Mhash_Mirror='http://downloads.sourceforge.net/mhash/mhash-0.9.9.9.tar.gz'
