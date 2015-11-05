@@ -46,6 +46,9 @@ Imagick_Mirror='http://pecl.php.net/get/imagick-3.1.2.tgz'
 Vim_Ver='vim-7.4'
 Vim_Mirror='http://ftp.vim.org/vim/unix/vim-7.4.tar.bz2'
 
+Yaf_Ver='yaf-2.3.5'
+Yaf_Mirror='http://pecl.php.net/get/yaf-2.3.5.tgz'
+
 
 # 待下载
 Curl_Ver='curl-7.42.1'
