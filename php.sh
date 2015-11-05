@@ -2,11 +2,11 @@
 . ./install.sh
 clear
 
-#暂时用不到
+#pipize 安装so扩展必要
 Export_PHP_Autoconf()
 {
-    export PHP_AUTOCONF=/usr/local/autoconf-2.13/bin/autoconf
-    export PHP_AUTOHEADER=/usr/local/autoconf-2.13/bin/autoheader
+    export PHP_AUTOCONF=${dst_root}/autoconf/bin/autoconf
+    export PHP_AUTOHEADER=${dst_root}/autoconf/bin/autoheader
 }
 
 Ln_PHP_Bin()
@@ -24,10 +24,13 @@ Pear_Pecl_Set()
     pecl config-set php_ini ${dst_root}/php/etc/php.ini
 }
 
+
 Install_PHP_56()
 {
     Echo_Blue "[+] Installing ${Php_Ver}"
     grep '^php' /etc/passwd || /usr/sbin/useradd -s /sbin/nologin --groups=web php 
+
+    Export_PHP_Autoconf
 
     # 配置文件目录
     # ls ${dst_etc}/php || mkdir ${dst_etc}/php
