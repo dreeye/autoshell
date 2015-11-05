@@ -14,7 +14,7 @@ Install_Yaf()
     fi
 
     cd ${shell_dir}/software
-    Download_Files ${Yaf_Mirror} ${Yaf_Ver}.tar.gz
+    Download_Files ${Yaf_Mirror} ${Yaf_Ver}.tgz
 
     Tar_Cd ${Yaf_Ver}.tar.gz ${Yaf_Ver}
     ${dst_root}/php/bin/phpize
