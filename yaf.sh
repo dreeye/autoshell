@@ -16,7 +16,7 @@ Install_Yaf()
     cd ${shell_dir}/software
     Download_Files ${Yaf_Mirror} ${Yaf_Ver}.tgz
 
-    Tar_Cd ${Yaf_Ver}.tar.gz ${Yaf_Ver}
+    Tar_Cd ${Yaf_Ver}.tgz ${Yaf_Ver}
     ${dst_root}/php/bin/phpize
     ./configure --with-php-config=${dst_root}/php/bin/php-config
     make && make install
