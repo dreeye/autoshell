@@ -43,6 +43,10 @@ ImageMagick_Mirror='http://mirror.checkdomain.de/imagemagick/ImageMagick-6.9.2-5
 Imagick_Ver='imagick-3.1.2'
 Imagick_Mirror='http://pecl.php.net/get/imagick-3.1.2.tgz'
 
+Vim_Ver='vim-7.4'
+Vim_Mirror='http://ftp.vim.org/vim/unix/vim-7.4.tar.bz2'
+
+
 # 待下载
 Curl_Ver='curl-7.42.1'
 Jemalloc_Ver='jemalloc-3.6.0'

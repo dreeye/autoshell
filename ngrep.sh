@@ -1,13 +1,10 @@
-#include init
-. ./init.sh
-#exce init function in init.sh
-init
+. ./install.sh
 clear
 echo "========================================================================="
 echo "install ngrep command"
 echo "========================================================================="
 
-cd $soft_dir
+cd ${shell_dir}/software
 
 if [ -s "$soft_dir/ngrep-1.45.tar.bz2" ]; then
     echo 'ngrep-1.45.tar.bz2[found]'

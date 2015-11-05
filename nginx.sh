@@ -11,8 +11,9 @@ grep '^nginx' /etc/passwd || /usr/sbin/useradd -s /sbin/nologin --groups=web ngi
 # 配置文件目录
 #ls ${dst_root}/nginx || mkdir ${dst_root}/nginx
 # 缓存文件
-#ls ${dst_tmp}/nginx || mkdir ${dst_tmp}/nginx
+ls ${dst_root}/nginx/tmp || mkdir ${dst_root}/nginx/tmp
 # pid
+ls ${dst_root}/nginx/run || mkdir ${dst_root}/nginx/run
 #ls ${dst_run}/nginx || mkdir ${dst_run}/nginx
 #ls ${dst_log}/nginx || mkdir ${dst_log}/nginx
 # echo ${Nginx_Ver}
@@ -39,6 +40,9 @@ chmod +w ${dst_root}/nginx/etc/vhost
 chown -R nginx:web ${dst_root}/nginx/etc/vhost
 
 chmod +w ${dst_root}/nginx/logs
+
+ln -sf ${dst_root}/nginx/sbin/nginx /usr/sbin/nginx
+
 #startup
 rc_nginx_local=$(grep "${dst_root}/sbin/nginx" /etc/rc.d/rc.local)
 if [ "$rc_nginx_local" == "" ]; then
