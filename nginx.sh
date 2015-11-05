@@ -11,9 +11,9 @@ grep '^nginx' /etc/passwd || /usr/sbin/useradd -s /sbin/nologin --groups=web ngi
 # 配置文件目录
 #ls ${dst_root}/nginx || mkdir ${dst_root}/nginx
 # 缓存文件
-ls ${dst_root}/nginx/tmp || mkdir ${dst_root}/nginx/tmp
+ls ${dst_root}/nginx/tmp || mkdir -p ${dst_root}/nginx/tmp
 # pid
-ls ${dst_root}/nginx/run || mkdir ${dst_root}/nginx/run
+ls ${dst_root}/nginx/run || mkdir -p ${dst_root}/nginx/run
 #ls ${dst_run}/nginx || mkdir ${dst_run}/nginx
 #ls ${dst_log}/nginx || mkdir ${dst_log}/nginx
 # echo ${Nginx_Ver}
@@ -34,7 +34,7 @@ cp nginx/nginx.conf ${dst_root}/nginx/etc/nginx.conf
 #ls ${dst_root}/nginx/etc/common/ || mkdir ${dst_root}/nginx/etc/common/
 cp nginx/error.conf ${dst_root}/nginx/etc/error.conf
 
-ls ${dst_root}/nginx/etc/vhost || mkdir  ${dst_root}/nginx/etc/vhost
+ls ${dst_root}/nginx/etc/vhost || mkdir -p ${dst_root}/nginx/etc/vhost
 cp nginx/vhost_www.test.cc.conf ${dst_root}/nginx/etc/vhost/
 chmod +w ${dst_root}/nginx/etc/vhost
 chown -R nginx:web ${dst_root}/nginx/etc/vhost

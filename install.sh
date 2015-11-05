@@ -52,8 +52,8 @@ echo -e "\n config file directory is $conf_dir"
 
 function init()
 {
-    # 提示安装,并加载version.sh
-    Press_Install
+    # 提示安装,需要研究下
+    #Press_Install
     # 打印系统内存信息,CentOS版本
     Print_Sys_Info
 
