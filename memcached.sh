@@ -28,6 +28,7 @@ Export_PHP_Autoconf()
 Install_Autoconf()
 {
     Echo_Blue "[+] Installing ${Autoconf_Ver}"
+    Download_Files ${Autoconf_Mirror} ${Autoconf_Ver}.tar.gz
     Tar_Cd ${Autoconf_Ver}.tar.gz ${Autoconf_Ver}
     ./configure --prefix=${dst_root}/autoconf
     make && make install
