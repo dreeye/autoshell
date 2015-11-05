@@ -2,12 +2,6 @@
 . ./install.sh
 clear
 
-#pipize 安装so扩展必要
-Export_PHP_Autoconf()
-{
-    export PHP_AUTOCONF=${dst_root}/autoconf/bin/autoconf
-    export PHP_AUTOHEADER=${dst_root}/autoconf/bin/autoheader
-}
 
 Ln_PHP_Bin()
 {

@@ -19,11 +19,6 @@ Install_PHPMemcached()
     cd ../
 }
 
-Export_PHP_Autoconf()
-{
-    export PHP_AUTOCONF=${dst_root}/autoconf/bin/autoconf
-    export PHP_AUTOHEADER=${dst_root}/autoconf/bin/autoheader
-}
 
 Install_Autoconf()
 {
