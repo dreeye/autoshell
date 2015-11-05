@@ -20,17 +20,17 @@ fi
 
 
 dst_root=$(tail -n 1 DST_ROOT) # 安装路径
-dst_etc=$dst_root/etc # 配置文件
-dst_htdocs=$dst_root/htdocs 
-dst_logs=$dst_root/var/logs
-dst_run=$dst_root/var/run # nginx pid
-dst_tmp=$dst_root/var/tmp # nginx tmp
+#dst_etc=$dst_root/etc # 配置文件
+#dst_htdocs=$dst_root/htdocs 
+#dst_logs=$dst_root/var/logs
+#dst_run=$dst_root/var/run # nginx pid
+#dst_tmp=$dst_root/var/tmp # nginx tmp
 # if [ ! -d "$dst_root" ]; then
-ll $dst_etc || mkdir $dst_etc
-ll $dst_htdocs || mkdir $dst_htdocs
-ll $dst_logs || mkdir -p $dst_logs
-ll $dst_run ||  mkdir -p $dst_run
-ll $dst_tmp || mkdir -p $dst_tmp
+#ll $dst_etc || mkdir $dst_etc
+#ll $dst_htdocs || mkdir $dst_htdocs
+#ll $dst_logs || mkdir -p $dst_logs
+#ll $dst_run ||  mkdir -p $dst_run
+#ll $dst_tmp || mkdir -p $dst_tmp
 echo 'all files will install to' $dst_root
 # fi
 
