@@ -10,7 +10,7 @@ if [ -s "$soft_dir/ngrep-1.45.tar.bz2" ]; then
     echo 'ngrep-1.45.tar.bz2[found]'
 else
     echo 'Downloading ngrep-1.45.tar.bz2' 
-    wget -c 'http://colocrossing.dl.sourceforge.net/project/ngrep/ngrep/1.45/ngrep-1.45.tar.bz2'
+    wget -c 'http://prdownloads.sourceforge.net/ngrep/ngrep-1.45.tar.bz2'
 fi
 
 tar jxf ngrep-1.45.tar.bz2
