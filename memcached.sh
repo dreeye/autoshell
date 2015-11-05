@@ -5,8 +5,12 @@ clear
 Install_PHPMemcached()
 {
     echo "Install memcached php extension..."
-    #cd ${cur_dir}/src
     yum install cyrus-sasl-devel -y
+
+    cd ${shell_dir}/software
+    Download_Files ${Libmemcached_Mirror} ${Libmemcached_Ver}.tar.gz
+    Download_Files ${PHPMemcached_Mirror} ${PHPMemcached_Ver}.tgz
+
     Tar_Cd ${Libmemcached_Ver}.tar.gz ${Libmemcached_Ver}
     ./configure --prefix=${dst_root}/libmemcached --with-memcached
     make && make install
@@ -46,10 +50,15 @@ Install_Memcached()
         rm -f "${zend_ext}"
     fi
 
+
         sed -i "/the dl()/i\
 extension = \"${PHP_ZTS}\"" ${dst_root}/php/etc/php.ini
 
     echo "Install memcached..."
+
+    cd ${shell_dir}/software
+    Download_Files ${Memcached_Mirror} ${Memcached_Ver}.tar.gz
+
     Tar_Cd ${Memcached_Ver}.tar.gz ${Memcached_Ver}
     ./configure --prefix=${dst_root}/memcached
     make &&make install

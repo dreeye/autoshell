@@ -9,10 +9,6 @@ Check_Download()
     Download_Files ${Php_Mirror} ${Php_Ver}.tar.gz
     Download_Files ${Autoconf_Mirror} ${Autoconf_Ver}.tar.gz
     Download_Files ${Mhash_Mirror} ${Mhash_Ver}.tar.gz
-    Download_Files ${Libmemcached_Mirror} ${Libmemcached_Ver}.tar.gz
-    Download_Files ${PHPMemcached_Mirror} ${PHPMemcached_Ver}.tgz
-    Download_Files ${Memcached_Mirror} ${Memcached_Ver}.tar.gz
-    Download_Files ${Nginx_Mirror} ${Nginx_Ver}.tgz
 }
 
 Press_Install()

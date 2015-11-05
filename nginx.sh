@@ -16,6 +16,8 @@ grep '^nginx' /etc/passwd || /usr/sbin/useradd -s /sbin/nologin --groups=web ngi
 #ls ${dst_run}/nginx || mkdir ${dst_run}/nginx
 #ls ${dst_log}/nginx || mkdir ${dst_log}/nginx
 # echo ${Nginx_Ver}
+cd ${shell_dir}/software
+Download_Files ${Nginx_Mirror} ${Nginx_Ver}.tgz
 Tar_Cd ${Nginx_Ver}.tar.gz ${Nginx_Ver}
 
 ./configure --user=nginx --group=web --prefix=${dst_root} --conf-path=${dst_root}/nginx/etc/nginx.conf --with-pcre=${shell_dir}/software/pcre-8.37 --error-log-path=${dst_root}/nginx/logs/error.log --with-http_stub_status_module --with-http_ssl_module --with-http_spdy_module --with-http_realip_module --with-http_addition_module --with-http_sub_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_auth_request_module --with-http_random_index_module --with-http_secure_link_module
