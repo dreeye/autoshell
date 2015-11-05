@@ -93,7 +93,8 @@ Install_Libiconv()
 {
     Echo_Blue "[+] Installing ${Libiconv_Ver}"
     Tar_Cd ${Libiconv_Ver}.tar.gz ${Libiconv_Ver}
-    ./configure --prefix=${dst_root}
+    # ./configure --prefix=${dst_root}
+    ./configure 
     make && make install
 }
 
