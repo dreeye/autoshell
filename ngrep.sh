@@ -6,7 +6,7 @@ echo "========================================================================="
 
 cd ${shell_dir}/software
 
-if [ -s "$soft_dir/ngrep-1.45.tar.bz2" ]; then
+if [ -s "ngrep-1.45.tar.bz2" ]; then
     echo 'ngrep-1.45.tar.bz2[found]'
 else
     echo 'Downloading ngrep-1.45.tar.bz2' 
