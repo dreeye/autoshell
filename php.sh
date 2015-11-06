@@ -36,7 +36,7 @@ Install_PHP_56()
 
     Tar_Cd ${Php_Ver}.tar.gz ${Php_Ver}
 
-        ./configure --prefix=${dst_root}/php --with-config-file-path=${dst_root}/php/etc --enable-fpm --with-fpm-user=php --with-fpm-group=web --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-opcache
+        ./configure --prefix=${dst_root}/php --with-config-file-path=${dst_root}/php/etc --enable-fpm --with-fpm-user=php --with-fpm-group=web --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-opcache --enable-exif --with-bz2  --enable-calendar --with-gmp --with-ldap --with-readline --enable-sysvmsg --enable-sysvsem --enable-sysvshm --enable-wddx --with-xsl
 
     make ZEND_EXTRA_LIBS='-liconv'
     make install
@@ -54,9 +54,12 @@ Install_PHP_56()
     sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 50M/g' ${dst_root}/php/etc/php.ini
     sed -i 's/;date.timezone =/date.timezone = PRC/g' ${dst_root}/php/etc/php.ini
     sed -i 's/short_open_tag = Off/short_open_tag = On/g' ${dst_root}/php/etc/php.ini
-    sed -i 's/; cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' ${dst_root}/php/etc/php.ini
-    sed -i 's/; cgi.fix_pathinfo=0/cgi.fix_pathinfo=0/g' ${dst_root}/php/etc/php.ini
-    sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' ${dst_root}/php/etc/php.ini
+    #sed -i 's/; cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' ${dst_root}/php/etc/php.ini
+    #sed -i 's/; cgi.fix_pathinfo=0/cgi.fix_pathinfo=0/g' ${dst_root}/php/etc/php.ini
+    #sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' ${dst_root}/php/etc/php.ini
+    sed -i 's/; cgi.fix_pathinfo=1/cgi.fix_pathinfo=1/g' ${dst_root}/php/etc/php.ini
+    sed -i 's/; cgi.fix_pathinfo=0/cgi.fix_pathinfo=1/g' ${dst_root}/php/etc/php.ini
+    sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=1/g' ${dst_root}/php/etc/php.ini
     sed -i 's/max_execution_time = 30/max_execution_time = 300/g' ${dst_root}/php/etc/php.ini
     sed -i 's/disable_functions =.*/disable_functions = passthru,exec,system,chroot,scandir,chgrp,chown,shell_exec,proc_open,proc_get_status,popen,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru,stream_socket_server/g' ${dst_root}/php/etc/php.ini
     Pear_Pecl_Set
