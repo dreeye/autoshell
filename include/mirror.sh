@@ -49,13 +49,16 @@ Vim_Mirror='http://ftp.vim.org/vim/unix/vim-7.4.tar.bz2'
 Yaf_Ver='yaf-2.3.5'
 Yaf_Mirror='http://pecl.php.net/get/yaf-2.3.5.tgz'
 
+Redis='redis-3.0.1'
+Redis_Mirror='http://download.redis.io/releases/redis-3.0.5.tar.gz'
 
+PHPRedis_Ver='redis-2.2.7'
+PHPRedis_Mirror='http://pecl.php.net/get/redis-2.2.7.tgz'
 # 待下载
 Curl_Ver='curl-7.42.1'
 Jemalloc_Ver='jemalloc-3.6.0'
 TCMalloc_Ver='gperftools-2.4'
 Libunwind_Ver='libunwind-1.1'
 XCache_Ver='xcache-3.2.0'
-Redis_Stable_Ver='redis-3.0.1'
 Freetype_Ver='freetype-2.4.12'
 PHPRedis_Ver='redis-2.2.7'
