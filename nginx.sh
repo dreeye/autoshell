@@ -9,15 +9,14 @@ echo "============================Install Nginx=================================
 grep '^nginx' /etc/passwd || /usr/sbin/useradd -s /sbin/nologin --groups=web nginx 
 
 # 配置文件目录
-#ls ${dst_root}/nginx || mkdir ${dst_root}/nginx
 # 缓存文件
 ls ${dst_root}/nginx/tmp || mkdir -p ${dst_root}/nginx/tmp
 # pid
 ls ${dst_root}/nginx/run || mkdir -p ${dst_root}/nginx/run
-#ls ${dst_run}/nginx || mkdir ${dst_run}/nginx
-#ls ${dst_log}/nginx || mkdir ${dst_log}/nginx
-# echo ${Nginx_Ver}
+ls ${dst_root}/htdocs || mkdir -p ${dst_root}/htdocs
+
 cd ${shell_dir}/software
+
 Download_Files ${Nginx_Mirror} ${Nginx_Ver}.tgz
 Tar_Cd ${Nginx_Ver}.tar.gz ${Nginx_Ver}
 
@@ -36,10 +35,12 @@ cp nginx/error.conf ${dst_root}/nginx/etc/error.conf
 
 ls ${dst_root}/nginx/etc/vhost || mkdir -p ${dst_root}/nginx/etc/vhost
 cp nginx/vhost_www.test.cc.conf ${dst_root}/nginx/etc/vhost/
-chmod +w ${dst_root}/nginx/etc/vhost
-chown -R nginx:web ${dst_root}/nginx/etc/vhost
 
-chmod +w ${dst_root}/nginx/logs
+chown -R nginx:web ${dst_root}/nginx/etc/vhost
+chown -R nginx:web ${dst_root}/nginx/logs
+chmod 755 ${dst_root}/nginx/etc/vhost
+chmod 755 ${dst_root}/nginx/logs
+chmod 755 ${dst_root}/htdocs
 
 ln -sf ${dst_root}/nginx/sbin/nginx /usr/sbin/nginx
 
