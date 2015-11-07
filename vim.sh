@@ -30,7 +30,7 @@ cd ${shell_dir}/software
 Download_Files ${Vim_Mirror} ${Vim_Ver}.tar.bz2
 
 #download nerdtree
-if [ -s "$shell_dir/software/nerdtree.zip" ]; then
+if [ -s "${shell_dir}/software/nerdtree.zip" ]; then
     echo 'nerdtree.zip[found]'
 else
     echo 'Downloading nerdtree.zip'
