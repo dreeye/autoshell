@@ -54,6 +54,10 @@ Redis_Mirror='http://download.redis.io/releases/redis-3.0.5.tar.gz'
 
 PHPRedis_Ver='redis-2.2.7'
 PHPRedis_Mirror='http://pecl.php.net/get/redis-2.2.7.tgz'
+
+Xdebug='xdebug-2.3.2'
+Xdebug_Mirror='http://pecl.php.net/get/xdebug-2.3.2.tgz'
+
 # 待下载
 Curl_Ver='curl-7.42.1'
 Jemalloc_Ver='jemalloc-3.6.0'
