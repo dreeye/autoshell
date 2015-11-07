@@ -20,8 +20,6 @@ Install_Xdebug()
         rm -f "${zend_ext}"
     fi
 
-        sed -i "/the dl()/i\
-extension = \"${PHP_ZTS}\"" ${dst_root}/php/etc/php.ini
 
     echo "Install xdebug..."
 
@@ -34,7 +32,7 @@ extension = \"${PHP_ZTS}\"" ${dst_root}/php/etc/php.ini
     cd ../
 
 sed -i '/the dl()/i\
-extension = "xdebug.so"' ${dst_root}/php/etc/php.ini
+zend_extension = "xdebug.so"' ${dst_root}/php/etc/php.ini
 
     if [ -s ${zend_ext} ]; then
         echo "====== Xdebug install completed ======"

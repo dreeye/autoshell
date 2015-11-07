@@ -20,8 +20,6 @@ Install_Redis()
         rm -f "${zend_ext}"
     fi
 
-        sed -i "/the dl()/i\
-extension = \"${PHP_ZTS}\"" ${dst_root}/php/etc/php.ini
 
     echo "Install redis..."
 
