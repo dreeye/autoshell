@@ -49,7 +49,7 @@ Vim_Mirror='http://ftp.vim.org/vim/unix/vim-7.4.tar.bz2'
 Yaf_Ver='yaf-2.3.5'
 Yaf_Mirror='http://pecl.php.net/get/yaf-2.3.5.tgz'
 
-Redis_Ver='redis-3.0.1'
+Redis_Ver='redis-3.0.5'
 Redis_Mirror='http://download.redis.io/releases/redis-3.0.5.tar.gz'
 
 PHPRedis_Ver='redis-2.2.7'
