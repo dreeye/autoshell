@@ -26,6 +26,8 @@ Install_PHP_56()
 
     Export_PHP_Autoconf
 
+    cp -frp /usr/lib64/libldap* /usr/lib/
+
     # 配置文件目录
     # ls ${dst_etc}/php || mkdir ${dst_etc}/php
     # 缓存文件
