@@ -73,18 +73,15 @@ function ext()
 }
 
 Press_Install
-# choose your username by vim
-setup_phpext="yes"
-echo "Need start setup PHP ext?"
-read -p "(Default: yes):" is_allow_setup_phpext
-if [ "$is_allow_setup_phpext" = "" ]; then
-    setup_phpext="yes"
-elif ["$is_allow_setup_phpext" = "yes" ]; then
-    setup_phpext="yes"
-else
-    setup_phpext="no"
-fi
 
-if ["$setup_phpext" = "yes"]; then
+setup_phpext="y"
+echo "Need start setup PHP ext?"
+read -p "(Default: y):" setup_phpext 
+if [ "$setup_phpext" = "" ];then
+    setup_phpext="y"
+else
+    setup_phpext="n"
+fi
+if ["$setup_phpext" = "y"];then
     ext 2>&1 | tee /root/as-init-install.log
 fi
