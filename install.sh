@@ -20,19 +20,7 @@ fi
 
 
 dst_root=$(tail -n 1 DST_ROOT) # 安装路径
-#dst_etc=$dst_root/etc # 配置文件
-#dst_htdocs=$dst_root/htdocs 
-#dst_logs=$dst_root/var/logs
-#dst_run=$dst_root/var/run # nginx pid
-#dst_tmp=$dst_root/var/tmp # nginx tmp
-# if [ ! -d "$dst_root" ]; then
-#ll $dst_etc || mkdir $dst_etc
-#ll $dst_htdocs || mkdir $dst_htdocs
-#ll $dst_logs || mkdir -p $dst_logs
-#ll $dst_run ||  mkdir -p $dst_run
-#ll $dst_tmp || mkdir -p $dst_tmp
 echo 'all files will install to' $dst_root
-# fi
 
 clear
 echo "========================================================================="
@@ -50,27 +38,27 @@ conf_dir=$shell_dir'/conf'
 
 echo -e "\n config file directory is $conf_dir"
 
-function init()
+# 打印系统内存信息,CentOS版本
+Print_Sys_Info
+
+#Set timezone
+Set_Timezone
+
+# CentOS 安装ntp并更新时间
+CentOS_InstallNTP
+# CentOS删除httpd,php,mysql rpm包
+CentOS_RemoveAMP
+# 初始化yum更新
+CentOS_Dependent
+# Disable SeLinux
+Disable_Selinux
+# init common shell
+Init_Shell
+Check_Download
+function ext()
 {
     # 提示安装,需要研究下
     #Press_Install
-    # 打印系统内存信息,CentOS版本
-    Print_Sys_Info
-
-    #Set timezone
-    Set_Timezone
-
-    # CentOS 安装ntp并更新时间
-    CentOS_InstallNTP
-    # CentOS删除httpd,php,mysql rpm包
-    CentOS_RemoveAMP
-    # 初始化yum更新
-    CentOS_Dependent
-    # Disable SeLinux
-    Disable_Selinux
-    # init common shell
-    Init_Shell
-    Check_Download
     Install_Autoconf
     Install_Libiconv
     Install_Libmcrypt
@@ -81,9 +69,22 @@ function init()
     # 动态库软连接
     CentOS_Lib_Opt
 
-    
 
 }
 
-#    Press_Install
-#init 2>&1 | tee /root/as-init-install.log
+Press_Install
+# choose your username by vim
+setup_phpext="yes"
+echo "Need start setup PHP ext?"
+read -p "(Default: yes):" is_allow_setup_phpext
+if [ "$is_allow_setup_phpext" = "" ]; then
+    setup_phpext="yes"
+elif ["$is_allow_setup_phpext" = "yes" ]; then
+    setup_phpext="yes"
+else
+    setup_phpext="no"
+fi
+
+if ["$setup_phpext" = "yes"]; then
+    ext 2>&1 | tee /root/as-init-install.log
+fi

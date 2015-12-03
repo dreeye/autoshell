@@ -11,7 +11,7 @@ Ln_PHP_Bin()
     ln -sf ${dst_root}/php/bin/pecl /usr/bin/pecl
     ln -sf ${dst_root}/php/sbin/php-fpm /usr/bin/php-fpm
 }
-
+# 避免出现PECL: configuration option "php_ini" is not set to php.ini location 
 Pear_Pecl_Set()
 {
     pear config-set php_ini ${dst_root}/php/etc/php.ini
@@ -21,20 +21,15 @@ Pear_Pecl_Set()
 
 Install_PHP_56()
 {
+    # 此变量在mirror.sh
     Echo_Blue "[+] Installing ${Php_Ver}"
     grep '^php' /etc/passwd || /usr/sbin/useradd -s /sbin/nologin --groups=web php 
 
+    # 赋值autoconf环境变量
     Export_PHP_Autoconf
 
+    # 拷贝动态链接库
     cp -frp /usr/lib64/libldap* /usr/lib/
-
-    # 配置文件目录
-    # ls ${dst_etc}/php || mkdir ${dst_etc}/php
-    # 缓存文件
-    # ls ${dst_tmp}/php || mkdir ${dst_tmp}/php
-    # pid
-    # ls ${dst_run}/php || mkdir ${dst_run}/php
-    # ls ${dst_log}/php || mkdir ${dst_log}/php
 
     Tar_Cd ${Php_Ver}.tar.gz ${Php_Ver}
 
@@ -50,20 +45,20 @@ Install_PHP_56()
     \cp php.ini-production ${dst_root}/php/etc/php.ini
 
     cd ${shell_dir}
-    # php extensions
-    echo "Modify php.ini......"
-    sed -i 's/post_max_size = 8M/post_max_size = 50M/g' ${dst_root}/php/etc/php.ini
-    sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 50M/g' ${dst_root}/php/etc/php.ini
-    sed -i 's/;date.timezone =/date.timezone = PRC/g' ${dst_root}/php/etc/php.ini
-    sed -i 's/short_open_tag = Off/short_open_tag = On/g' ${dst_root}/php/etc/php.ini
+    # php extensions 暂用默认
+    #echo "Modify php.ini......"
+    #sed -i 's/post_max_size = 8M/post_max_size = 50M/g' ${dst_root}/php/etc/php.ini
+    #sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 50M/g' ${dst_root}/php/etc/php.ini
+    #sed -i 's/;date.timezone =/date.timezone = PRC/g' ${dst_root}/php/etc/php.ini
+    #sed -i 's/short_open_tag = Off/short_open_tag = On/g' ${dst_root}/php/etc/php.ini
     #sed -i 's/; cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' ${dst_root}/php/etc/php.ini
     #sed -i 's/; cgi.fix_pathinfo=0/cgi.fix_pathinfo=0/g' ${dst_root}/php/etc/php.ini
     #sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' ${dst_root}/php/etc/php.ini
-    sed -i 's/; cgi.fix_pathinfo=1/cgi.fix_pathinfo=1/g' ${dst_root}/php/etc/php.ini
-    sed -i 's/; cgi.fix_pathinfo=0/cgi.fix_pathinfo=1/g' ${dst_root}/php/etc/php.ini
-    sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=1/g' ${dst_root}/php/etc/php.ini
-    sed -i 's/max_execution_time = 30/max_execution_time = 300/g' ${dst_root}/php/etc/php.ini
-    sed -i 's/disable_functions =.*/disable_functions = passthru,exec,system,chroot,scandir,chgrp,chown,shell_exec,proc_open,proc_get_status,popen,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru,stream_socket_server/g' ${dst_root}/php/etc/php.ini
+    #sed -i 's/; cgi.fix_pathinfo=1/cgi.fix_pathinfo=1/g' ${dst_root}/php/etc/php.ini
+    #sed -i 's/; cgi.fix_pathinfo=0/cgi.fix_pathinfo=1/g' ${dst_root}/php/etc/php.ini
+    #sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=1/g' ${dst_root}/php/etc/php.ini
+    #sed -i 's/max_execution_time = 30/max_execution_time = 300/g' ${dst_root}/php/etc/php.ini
+    #sed -i 's/disable_functions =.*/disable_functions = passthru,exec,system,chroot,scandir,chgrp,chown,shell_exec,proc_open,proc_get_status,popen,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru,stream_socket_server/g' ${dst_root}/php/etc/php.ini
     Pear_Pecl_Set
 
 cat >>${dst_root}/php/etc/php.ini<<EOF

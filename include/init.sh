@@ -185,9 +185,14 @@ eof
     echo "fs.file-max=65535" >> /etc/sysctl.conf
 }
 
-#pipize 安装so扩展必要
+#pipize 安装so扩展必要,会检查autoconf是否安装
 Export_PHP_Autoconf()
 {
-    export PHP_AUTOCONF=${dst_root}/autoconf/bin/autoconf
-    export PHP_AUTOHEADER=${dst_root}/autoconf/bin/autoheader
+    if [ -d "${dst_root}/autoconf"]; then
+        export PHP_AUTOCONF=${dst_root}/autoconf/bin/autoconf
+        export PHP_AUTOHEADER=${dst_root}/autoconf/bin/autoheader
+    else
+        Echo_Red "isnt setup autoconf , Please sh install.sh and allow setup phpext!"
+        exit 1
+    fi
 }

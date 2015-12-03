@@ -5,13 +5,15 @@ clear
 Install_Yaf()
 {
     echo "====== Installing Yaf ======"
-
-    sed -i '/yaf.so/d' ${dst_root}/php/etc/php.ini
+    
+    # 根据php版本确定php扩展的准确目录,以便确定是否安装成功
     Get_PHP_Ext_Dir
     zend_ext="${zend_ext_dir}yaf.so"
+    # 删除旧版yaf.so
     if [ -s "${zend_ext}" ]; then
         rm -f "${zend_ext}"
     fi
+    sed -i '/yaf.so/d' ${dst_root}/php/etc/php.ini
 
     cd ${shell_dir}/software
     Download_Files ${Yaf_Mirror} ${Yaf_Ver}.tgz
@@ -40,9 +42,14 @@ Uninstall_Yaf()
 {
     echo "You will uninstall Yaf..."
     #Press_Start
+    Get_PHP_Ext_Dir
+    zend_ext="${zend_ext_dir}yaf.so"
+    # 删除旧版yaf.so
+    if [ -s "${zend_ext}" ]; then
+        echo "Delete Yaf so..."
+        rm -f "${zend_ext}"
+    fi
     sed -i '/yaf.so/d' ${dst_root}/php/etc/php.ini
-    echo "Delete Yaf directory..."
-    rm -rf ${dst_root}/yaf
     #Restart_PHP
     echo "Uninstall Yaf completed."
 }
