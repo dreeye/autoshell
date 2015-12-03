@@ -80,11 +80,11 @@ function ext()
 
 Press_Install
 
-setup_phpext="y"
+setup_phpext="n"
 echo "Need start setup PHP ext?"
-read -p "(Default: y):" setup_phpext 
+read -p "(Press y going setup. Default: n):" setup_phpext 
 if [ "$setup_phpext" = "" ];then
-    setup_phpext="y"
+    setup_phpext="n"
 fi
 if [ "$setup_phpext" = "y" ];then
     ext 2>&1 | tee /root/as-init-install.log
