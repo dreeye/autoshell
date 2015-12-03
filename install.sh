@@ -55,11 +55,17 @@ Disable_Selinux
 # init common shell
 Init_Shell
 Check_Download
+
+if [ -d "${dst_root}/autoconf" ]; then
+    Echo_Blue "autoconf already setuped !! "
+else
+    Install_Autoconf
+fi
+
 function ext()
 {
     # 提示安装,需要研究下
     #Press_Install
-    Install_Autoconf
     Install_Libiconv
     Install_Libmcrypt
     Install_Mhash
