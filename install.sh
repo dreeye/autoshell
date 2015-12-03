@@ -79,9 +79,7 @@ echo "Need start setup PHP ext?"
 read -p "(Default: y):" setup_phpext 
 if [ "$setup_phpext" = "" ];then
     setup_phpext="y"
-else
-    setup_phpext="n"
 fi
-if ["$setup_phpext" = "y"];then
+if [ "$setup_phpext" = "y" ];then
     ext 2>&1 | tee /root/as-init-install.log
 fi
