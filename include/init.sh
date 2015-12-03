@@ -188,7 +188,7 @@ eof
 #pipize 安装so扩展必要,会检查autoconf是否安装
 Export_PHP_Autoconf()
 {
-    if [ -d "${dst_root}/autoconf"]; then
+    if [ -d "${dst_root}/autoconf" ]; then
         export PHP_AUTOCONF=${dst_root}/autoconf/bin/autoconf
         export PHP_AUTOHEADER=${dst_root}/autoconf/bin/autoheader
     else
