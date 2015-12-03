@@ -81,7 +81,7 @@ function ext()
 Press_Install
 
 setup_phpext="n"
-echo "Need start setup PHP ext?"
+echo "Need start setup iconv, mcrypt, mhash, pcre?"
 read -p "(Press y going setup. Default: n):" setup_phpext 
 if [ "$setup_phpext" = "" ];then
     setup_phpext="n"
