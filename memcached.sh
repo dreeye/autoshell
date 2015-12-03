@@ -52,10 +52,10 @@ Install_PHPMemcache()
 Install_Memcached()
 {
 
-    PHP_ZTS="memcached.so"
+    PHP_ZTS="memcache.so"
+    PHP_ZTS_D="memcached.so"
 
     echo "====== Installing memcached ======"
-    #Press_Install
 
     sed -i '/memcache.so/d' ${dst_root}/php/etc/php.ini
     sed -i '/memcached.so/d' ${dst_root}/php/etc/php.ini
@@ -64,10 +64,17 @@ Install_Memcached()
     if [ -s "${zend_ext}" ]; then
         rm -f "${zend_ext}"
     fi
+    zend_ext_d=${zend_ext_dir}${PHP_ZTS_D}
+    if [ -s "${zend_ext_d}" ]; then
+        rm -f "${zend_ext_d}"
+    fi
 
 
         sed -i "/the dl()/i\
 extension = \"${PHP_ZTS}\"" ${dst_root}/php/etc/php.ini
+
+        sed -i "/the dl()/i\
+extension = \"${PHP_ZTS_D}\"" ${dst_root}/php/etc/php.ini
 
     echo "Install memcached..."
 
@@ -110,10 +117,17 @@ extension = \"${PHP_ZTS}\"" ${dst_root}/php/etc/php.ini
     #/etc/init.d/memcached start
 
     if [ -s ${zend_ext} ]; then
-        echo "====== Memcached install completed ======"
+        echo "====== Memcache install completed ======"
         echo "Memcached installed successfully, enjoy it!"
     else
         sed -i '/${PHP_ZTS}/d' ${dst_root}/php/etc/php.ini
+        echo "Memcached install failed!"
+    fi
+    if [ -s ${zend_ext_d} ]; then
+        echo "====== Memcached install completed ======"
+        echo "Memcached installed successfully, enjoy it!"
+    else
+        sed -i '/${PHP_ZTS_D}/d' ${dst_root}/php/etc/php.ini
         echo "Memcached install failed!"
     fi
 }
