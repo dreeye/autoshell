@@ -23,6 +23,21 @@ Install_PHPMemcached()
     cd ../
 }
 
+Install_PHPMemcache()
+{
+    echo "Install memcache php extension..."
+    yum install cyrus-sasl-devel -y
+
+    cd ${shell_dir}/software
+    Download_Files ${PHPMemcache_Mirror} ${PHPMemcache_Ver}.tgz
+
+    Tar_Cd ${PHPMemcache_Ver}.tgz ${PHPMemcache_Ver}
+    ${dst_root}/php/bin/phpize
+    ./configure --with-php-config=${dst_root}/php/bin/php-config
+    make && make install
+    cd ../
+}
+
 
 #Install_Autoconf()
 #{
@@ -75,9 +90,9 @@ extension = \"${PHP_ZTS}\"" ${dst_root}/php/etc/php.ini
     #fi
 
     #StartUp memcached
-
+    
     Install_PHPMemcached
-
+    Install_PHPMemcache
     #echo "Copy Memcached PHP Test file..."
     #\cp ${cur_dir}/conf/memcached${ver}.php /home/wwwroot/default/memcached.php
 

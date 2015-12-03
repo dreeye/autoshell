@@ -34,6 +34,9 @@ Libmemcached_Mirror='https://launchpad.net/libmemcached/1.0/1.0.18/+download/lib
 PHPMemcached_Ver='memcached-2.2.0'
 PHPMemcached_Mirror='http://pecl.php.net/get/memcached-2.2.0.tgz'
 
+PHPMemcache_Ver='memcache-2.2.7'
+PHPMemcache_Mirror='http://pecl.php.net/get/memcache-2.2.7.tgz'
+
 Memcached_Ver='memcached-1.4.24'
 Memcached_Mirror='http://memcached.org/files/memcached-1.4.24.tar.gz'
 
