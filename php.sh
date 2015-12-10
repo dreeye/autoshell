@@ -33,6 +33,7 @@ Install_PHP_7()
 
     # 拷贝动态链接库
     cp -frp /usr/lib64/libldap* /usr/lib/
+    cp -frp /usr/lib64/liblber* /usr/lib/
 
     Tar_Cd ${Php_Ver7}.tar.gz ${Php_Ver7}
 
