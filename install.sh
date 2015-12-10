@@ -4,6 +4,7 @@ if [ $(id -u) != "0" ]; then
     echo "Error: You must be root to run this script, please use root to install lnmp"
     exit 1
 fi
+Press_Install
 
 . include/common.sh
 . include/init.sh
@@ -78,7 +79,6 @@ function ext()
 
 }
 
-Press_Install
 
 setup_phpext="n"
 echo "Need start setup iconv, mcrypt, mhash, pcre?"
