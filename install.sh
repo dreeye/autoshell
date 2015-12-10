@@ -56,6 +56,9 @@ CentOS_Dependent
 Disable_Selinux
 # init common shell
 Init_Shell
+# setup iptables and close firewallD if in CentOS7
+Init_iptables
+
 Check_Download
 
 if [ -d "${dst_root}/autoconf" ]; then

@@ -52,11 +52,15 @@ if [ "$rc_nginx_local" == "" ]; then
 fi
 #iptables port 80 rules
 if [ -s /sbin/iptables ]; then
-/sbin/iptables -I INPUT -p tcp --dport 80 -j ACCEPT
-/etc/rc.d/init.d/iptables save
-/etc/rc.d/init.d/iptables restart
+    /sbin/iptables -I INPUT -p tcp --dport 80 -j ACCEPT
+    if [ -s /usr/sbin/firewalld ]; then
+        systemctl restart iptables
+        systemctl enable iptables
+    else
+        /etc/rc.d/init.d/iptables save
+        /etc/rc.d/init.d/iptables restart
+    fi
 fi
-
 }
 
 install_nginx 2>&1 | tee /root/as-nginx-install.log

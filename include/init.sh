@@ -11,6 +11,18 @@ Check_Download()
     Download_Files ${Mhash_Mirror} ${Mhash_Ver}.tar.gz
 }
 
+Init_iptables()
+{
+    if [ -s /usr/sbin/firewalld ]; then
+        systemctl stop firewalld
+        systemctl disable firewalld
+        yum -y install iptables-services
+        systemctl restart iptables
+        systemctl enable iptables
+    fi 
+
+}
+
 Press_Install()
 {
     echo ""
