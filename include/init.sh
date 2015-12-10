@@ -147,13 +147,13 @@ Install_Mhash()
 
 Install_Pcre()
 {
-    Cur_Pcre_Ver=`pcre-config --version`
-    if echo "${Cur_Pcre_Ver}" | grep -vEqi '^8.';then
+    #Cur_Pcre_Ver=`pcre-config --version`
+    #if echo "${Cur_Pcre_Ver}" | grep -vEqi '^8.';then
         Echo_Blue "[+] Installing ${Pcre_Ver}"
         Tar_Cd ${Pcre_Ver}.tar.gz ${Pcre_Ver}
         ./configure
         make && make install
-    fi
+    #fi
 }
 
 CentOS_Lib_Opt()
