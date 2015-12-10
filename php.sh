@@ -215,3 +215,4 @@ EOF
 
 #Install_PHP_56
 Install_PHP_7
+Install_Composer
