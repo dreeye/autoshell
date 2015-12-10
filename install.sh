@@ -4,11 +4,12 @@ if [ $(id -u) != "0" ]; then
     echo "Error: You must be root to run this script, please use root to install lnmp"
     exit 1
 fi
-Press_Install
 
 . include/common.sh
 . include/init.sh
 . include/mirror.sh
+
+Press_Install
 
 Get_Dist_Name
 
