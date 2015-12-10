@@ -25,7 +25,7 @@ Pear_Pecl_Set()
 Install_PHP_7()
 {
     # 此变量在mirror.sh
-    Echo_Blue "[+] Installing ${Php_Ver}"
+    Echo_Blue "[+] Installing ${Php_Ver7}"
     grep '^php' /etc/passwd || /usr/sbin/useradd -s /sbin/nologin --groups=web php 
 
     # 赋值autoconf环境变量
@@ -34,7 +34,7 @@ Install_PHP_7()
     # 拷贝动态链接库
     cp -frp /usr/lib64/libldap* /usr/lib/
 
-    Tar_Cd ${Php_Ver}.tar.gz ${Php_Ver}
+    Tar_Cd ${Php_Ver7}.tar.gz ${Php_Ver7}
 
         ./configure --prefix=${dst_root}/php --with-config-file-path=${dst_root}/php/etc --enable-fpm --with-fpm-user=php --with-fpm-group=web --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-opcache --enable-exif --with-bz2  --enable-calendar --with-gmp --with-ldap --with-readline --enable-sysvmsg --enable-sysvsem --enable-sysvshm --enable-wddx --with-xsl
 
