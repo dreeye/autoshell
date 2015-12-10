@@ -13,6 +13,7 @@ grep '^nginx' /etc/passwd || /usr/sbin/useradd -s /sbin/nologin --groups=web ngi
 ls ${dst_root}/nginx/tmp || mkdir -p ${dst_root}/nginx/tmp
 # pid
 ls ${dst_root}/nginx/run || mkdir -p ${dst_root}/nginx/run
+ls ${dst_root}/nginx/logs || mkdir -p ${dst_root}/nginx/logs
 ls ${dst_root}/htdocs || mkdir -p ${dst_root}/htdocs
 
 cd ${shell_dir}/software
