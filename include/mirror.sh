@@ -15,6 +15,9 @@ Mcypt_Mirror='http://sourceforge.net/projects/mcrypt/files/MCrypt/2.6.8/mcrypt-2
 Php_Ver='php-5.6.15'
 Php_Mirror='http://cn2.php.net/get/php-5.6.15.tar.gz'
 
+Php_Ver7='php-7.0.0'
+Php_Mirror7='http://cn2.php.net/get/php-7.0.0.tar.gz'
+
 Autoconf_Ver='autoconf-2.69'
 Autoconf_Mirror='http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz'
 
@@ -24,8 +27,8 @@ Mhash_Mirror='http://downloads.sourceforge.net/mhash/mhash-0.9.9.9.tar.gz'
 Nginx_Ver='nginx-1.8.0'
 Nginx_Mirror='http://nginx.org/download/nginx-1.8.0.tar.gz'
 
-Mysql_Ver='mysql-5.5.42'
-Mysql_Mirror='http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.12.tar.gz'
+Mysql_Ver='mysql-5.7.10'
+Mysql_Mirror='http://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.10.tar.gz'
 
 
 Libmemcached_Ver='libmemcached-1.0.18'
@@ -68,4 +71,3 @@ TCMalloc_Ver='gperftools-2.4'
 Libunwind_Ver='libunwind-1.1'
 XCache_Ver='xcache-3.2.0'
 Freetype_Ver='freetype-2.4.12'
-PHPRedis_Ver='redis-2.2.7'

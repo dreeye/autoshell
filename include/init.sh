@@ -14,12 +14,11 @@ Check_Download()
 Press_Install()
 {
     echo ""
-    echo "Press any key to install...or Press Ctrl+c to cancel"
+    Echo_Green "Press any key to start...or Press Ctrl+c to cancel"
     OLDCONFIG=`stty -g`
     stty -icanon -echo min 1 time 0
     dd count=1 2>/dev/null
     stty ${OLDCONFIG}
-    # . include/mirror.sh
 }
 
 Init_Shell()

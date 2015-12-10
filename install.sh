@@ -40,7 +40,7 @@ echo -e "\n config file directory is $conf_dir"
 
 # 打印系统内存信息,CentOS版本
 Print_Sys_Info
-
+Get_Dist_Version
 #Set timezone
 Set_Timezone
 
