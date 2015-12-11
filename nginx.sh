@@ -54,8 +54,8 @@ fi
 if [ -s /sbin/iptables ]; then
     /sbin/iptables -I INPUT -p tcp --dport 80 -j ACCEPT
     if [ -s /usr/sbin/firewalld ]; then
+        service iptables save
         systemctl restart iptables
-        systemctl enable iptables
     else
         /etc/rc.d/init.d/iptables save
         /etc/rc.d/init.d/iptables restart

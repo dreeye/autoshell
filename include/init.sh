@@ -17,7 +17,6 @@ Init_iptables()
         systemctl stop firewalld
         systemctl disable firewalld
         yum -y install iptables-services
-        systemctl restart iptables
         systemctl enable iptables
     fi 
 
