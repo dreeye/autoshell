@@ -52,8 +52,8 @@ Imagick_Mirror='http://pecl.php.net/get/imagick-3.1.2.tgz'
 Vim_Ver='vim-7.4'
 Vim_Mirror='http://ftp.vim.org/vim/unix/vim-7.4.tar.bz2'
 
-Yaf_Ver='yaf-2.3.5'
-Yaf_Mirror='http://pecl.php.net/get/yaf-2.3.5.tgz'
+Yaf_Ver='yaf-3.0.0'
+Yaf_Mirror='http://pecl.php.net/get/yaf-3.0.0.tgz'
 
 Redis_Ver='redis-3.0.5'
 Redis_Mirror='http://download.redis.io/releases/redis-3.0.5.tar.gz'
