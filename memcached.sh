@@ -110,8 +110,14 @@ extension = \"${PHP_ZTS_D}\"" ${dst_root}/php/etc/php.ini
         /sbin/iptables -I INPUT -p udp -s 127.0.0.1 --dport 11211 -j ACCEPT
         /sbin/iptables -A INPUT -p tcp --dport 11211 -j DROP
         /sbin/iptables -A INPUT -p udp --dport 11211 -j DROP
-        service iptables save
-    fi
+        if [ -s /usr/sbin/firewalld ]; then
+            service iptables save
+            systemctl restart iptables
+        else
+            /etc/rc.d/init.d/iptables save
+            /etc/rc.d/init.d/iptables restart
+        fi
+    fi  
 
     #echo "Starting Memcached..."
     #/etc/init.d/memcached start
@@ -132,32 +138,6 @@ extension = \"${PHP_ZTS_D}\"" ${dst_root}/php/etc/php.ini
     fi
 }
 
-Uninstall_Memcached()
-{
-    echo "You will uninstall Memcached..."
-    Press_Start
-    sed -i '/memcache.so/d' ${dst_root}php/etc/php.ini
-    sed -i '/memcached.so/d' ${dst_root}php/etc/php.ini
-    Restart_PHP
-    Remove_StartUp memcached
-    echo "Delete Memcached files..."
-    rm -rf ${dst_root}libmemcached
-    rm -rf ${dst_root}memcached
-    rm -rf /etc/init.d/memcached
-    rm -rf /usr/bin/memcached
-    if [ -s /sbin/iptables ]; then
-        /sbin/iptables -D INPUT -p tcp -s 127.0.0.1 --dport 11211 -j ACCEPT
-        /sbin/iptables -D INPUT -p udp -s 127.0.0.1 --dport 11211 -j ACCEPT
-        /sbin/iptables -D INPUT -p tcp --dport 11211 -j DROP
-        /sbin/iptables -D INPUT -p udp --dport 11211 -j DROP
-        if [ "$PM" = "yum" ]; then
-            service iptables save
-        elif [ "$PM" = "apt" ]; then
-            iptables-save > /etc/iptables.rules
-        fi
-    fi
-    echo "Uninstall Memcached completed."
-}
 #Install_Autoconf
 Export_PHP_Autoconf
 Install_Memcached

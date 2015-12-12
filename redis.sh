@@ -39,11 +39,13 @@ Install_Redis()
     if [ -s /sbin/iptables ]; then
         /sbin/iptables -I INPUT -p tcp -s 127.0.0.1 --dport 6379 -j ACCEPT
         /sbin/iptables -A INPUT -p tcp --dport 6379 -j DROP
-        if [ "$PM" = "yum" ]; then
+        if [ -s /usr/sbin/firewalld ]; then
             service iptables save
-        elif [ "$PM" = "apt" ]; then
-            iptables-save > /etc/iptables.rules
-        fi  
+            systemctl restart iptables
+        else
+            /etc/rc.d/init.d/iptables save
+            /etc/rc.d/init.d/iptables restart
+        fi
     fi  
 
     if [ -s ${PHPRedis_Ver} ]; then
@@ -72,32 +74,5 @@ extension = "redis.so"' ${dst_root}/php/etc/php.ini
     fi
 }
 
-Uninstall_Redis()
-{
-    echo "You will uninstall Redis..."
-    Press_Start
-    sed -i '/memcache.so/d' ${dst_root}php/etc/php.ini
-    sed -i '/redis.so/d' ${dst_root}php/etc/php.ini
-    Restart_PHP
-    Remove_StartUp redis
-    echo "Delete Redis files..."
-    rm -rf ${dst_root}libredis
-    rm -rf ${dst_root}redis
-    rm -rf /etc/init.d/redis
-    rm -rf /usr/bin/redis
-    if [ -s /sbin/iptables ]; then
-        /sbin/iptables -D INPUT -p tcp -s 127.0.0.1 --dport 11211 -j ACCEPT
-        /sbin/iptables -D INPUT -p udp -s 127.0.0.1 --dport 11211 -j ACCEPT
-        /sbin/iptables -D INPUT -p tcp --dport 11211 -j DROP
-        /sbin/iptables -D INPUT -p udp --dport 11211 -j DROP
-        if [ "$PM" = "yum" ]; then
-            service iptables save
-        elif [ "$PM" = "apt" ]; then
-            iptables-save > /etc/iptables.rules
-        fi
-    fi
-    echo "Uninstall Redis completed."
-}
-#Install_Autoconf
 Export_PHP_Autoconf
 Install_Redis
