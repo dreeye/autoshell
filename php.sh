@@ -5,6 +5,7 @@ clear
 Install_Composer()
 {
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    composer config -g repositories.packagist composer http://packagist.phpcomposer.com
 }
 
 Ln_PHP_Bin()
