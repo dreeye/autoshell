@@ -50,20 +50,15 @@ Install_PHP_7()
     \cp php.ini-production ${dst_root}/php/etc/php.ini
 
     cd ${shell_dir}
-    # php extensions 暂用默认
-    #echo "Modify php.ini......"
-    #sed -i 's/post_max_size = 8M/post_max_size = 50M/g' ${dst_root}/php/etc/php.ini
-    #sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 50M/g' ${dst_root}/php/etc/php.ini
-    #sed -i 's/;date.timezone =/date.timezone = PRC/g' ${dst_root}/php/etc/php.ini
-    #sed -i 's/short_open_tag = Off/short_open_tag = On/g' ${dst_root}/php/etc/php.ini
+    # php.ini 初始化修改
+    echo "Modify php.ini......"
+    sed -i 's/post_max_size = 8M/post_max_size = 50M/g' ${dst_root}/php/etc/php.ini
+    sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 50M/g' ${dst_root}/php/etc/php.ini
+    sed -i 's/;date.timezone =/date.timezone = PRC/g' ${dst_root}/php/etc/php.ini
+    sed -i 's/short_open_tag = Off/short_open_tag = On/g' ${dst_root}/php/etc/php.ini
+    sed -i 's/max_execution_time = 30/max_execution_time = 300/g' ${dst_root}/php/etc/php.ini
+    sed -i 's/disable_functions =.*/disable_functions = passthru,exec,system,chroot,scandir,chgrp,chown,shell_exec,proc_open,proc_get_status,popen,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru,stream_socket_server/g' ${dst_root}/php/etc/php.ini
     #sed -i 's/; cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' ${dst_root}/php/etc/php.ini
-    #sed -i 's/; cgi.fix_pathinfo=0/cgi.fix_pathinfo=0/g' ${dst_root}/php/etc/php.ini
-    #sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' ${dst_root}/php/etc/php.ini
-    #sed -i 's/; cgi.fix_pathinfo=1/cgi.fix_pathinfo=1/g' ${dst_root}/php/etc/php.ini
-    #sed -i 's/; cgi.fix_pathinfo=0/cgi.fix_pathinfo=1/g' ${dst_root}/php/etc/php.ini
-    #sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=1/g' ${dst_root}/php/etc/php.ini
-    #sed -i 's/max_execution_time = 30/max_execution_time = 300/g' ${dst_root}/php/etc/php.ini
-    #sed -i 's/disable_functions =.*/disable_functions = passthru,exec,system,chroot,scandir,chgrp,chown,shell_exec,proc_open,proc_get_status,popen,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru,stream_socket_server/g' ${dst_root}/php/etc/php.ini
     Pear_Pecl_Set
 
 cat >>${dst_root}/php/etc/php.ini<<EOF
