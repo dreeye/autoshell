@@ -50,8 +50,9 @@ Set_Timezone
 CentOS_InstallNTP
 # CentOS删除httpd,php,mysql rpm包
 CentOS_RemoveAMP
-# 初始化yum更新
+
 CentOS_Dependent
+
 # Disable SeLinux
 Disable_Selinux
 # init common shell
@@ -83,7 +84,7 @@ function ext()
 
 }
 
-
+clear
 setup_phpext="n"
 echo "Need start setup iconv, mcrypt, mhash, pcre?"
 read -p "(Press y going setup. Default: n):" setup_phpext 

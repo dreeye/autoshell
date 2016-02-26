@@ -8,6 +8,11 @@ Libiconv_Mirror='http://ftp.gnu.org/gnu/libiconv/libiconv-1.14.tar.gz'
 LibMcrypt_Ver='libmcrypt-2.5.8'
 LibMcrypt_Mirror='http://sourceforge.net/projects/mcrypt/files/Libmcrypt/2.5.8/libmcrypt-2.5.8.tar.gz'
 
+Event_Ver='event-2.0.0RC1'
+Event_Mirror='https://pecl.php.net/get/event-2.0.0RC1.tgz'
+
+Libevent_Ver='libevent-0.1.0'
+Libevent_Mirror='https://pecl.php.net/get/libevent-0.1.0.tgz'
 
 Mcypt_Ver='mcrypt-2.6.8'
 Mcypt_Mirror='http://sourceforge.net/projects/mcrypt/files/MCrypt/2.6.8/mcrypt-2.6.8.tar.gz'
