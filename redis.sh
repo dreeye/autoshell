@@ -39,13 +39,13 @@ Install_Redis()
     if [ -s /sbin/iptables ]; then
         /sbin/iptables -I INPUT -p tcp -s 127.0.0.1 --dport 6379 -j ACCEPT
         /sbin/iptables -A INPUT -p tcp --dport 6379 -j DROP
-        if [ -s /usr/sbin/firewalld ]; then
-            service iptables save
-            systemctl restart iptables
-        else
-            /etc/rc.d/init.d/iptables save
-            /etc/rc.d/init.d/iptables restart
-        fi
+        #if [ -s /usr/sbin/firewalld ]; then
+        service iptables save
+        systemctl restart iptables
+        #else
+        #    /etc/rc.d/init.d/iptables save
+        #    /etc/rc.d/init.d/iptables restart
+        #fi
     fi  
 
     if [ -s ${PHPRedis_Ver} ]; then

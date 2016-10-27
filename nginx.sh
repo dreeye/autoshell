@@ -46,9 +46,9 @@ chmod 755 ${dst_root}/htdocs
 ln -sf ${dst_root}/nginx/sbin/nginx /usr/sbin/nginx
 
 #startup
-rc_nginx_local=$(grep "${dst_root}/sbin/nginx" /etc/rc.d/rc.local)
+rc_nginx_local=$(grep "${dst_root}/nginx/sbin/nginx" /etc/rc.d/rc.local)
 if [ "$rc_nginx_local" == "" ]; then
-    sed -i "\$a ${dst_root}/sbin/nginx" /etc/rc.d/rc.local
+    sed -i "\$a ${dst_root}/nginx/sbin/nginx" /etc/rc.d/rc.local
 fi
 #iptables port 80 rules
 if [ -s /sbin/iptables ]; then
