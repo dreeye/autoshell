@@ -13,12 +13,12 @@ Check_Download()
 
 Init_iptables()
 {
-    if [ -s /usr/sbin/firewalld ]; then
-        systemctl stop firewalld
-        systemctl disable firewalld
+    #if [ -s /usr/sbin/firewalld ]; then
+    #    systemctl stop firewalld
+    #    systemctl disable firewalld
         yum -y install iptables-services
         systemctl enable iptables
-    fi 
+    #fi 
 
 }
 
