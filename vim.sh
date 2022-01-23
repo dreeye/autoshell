@@ -1,13 +1,13 @@
 # choose your username by vim
-username="dreeye"
+username="wekson"
 echo "Please input the username for vim:"
-read -p "(Default User: dreeye):" username
+read -p "(Default User: wekson):" username
 
 
 echo "==========================="
 #指定vim的用户
 if [ "$username" = "" ]; then
-    username="dreeye"
+    username="wekson"
 fi
 #如果输入的用户不存在，则自动创建用户
 if [ ! -d "/home/$username" ]; then

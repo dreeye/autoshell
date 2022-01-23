@@ -17,11 +17,11 @@ Libevent_Mirror='https://pecl.php.net/get/libevent-0.1.0.tgz'
 Mcypt_Ver='mcrypt-2.6.8'
 Mcypt_Mirror='http://sourceforge.net/projects/mcrypt/files/MCrypt/2.6.8/mcrypt-2.6.8.tar.gz'
 
-Php_Ver='php-5.6.15'
-Php_Mirror='http://cn2.php.net/get/php-5.6.15.tar.gz'
+Php_Ver='php-7.4.27'
+Php_Mirror='http://cn2.php.net/get/php-7.4.27.tar.gz'
 
-Php_Ver7='php-7.0.11'
-Php_Mirror7='http://cn2.php.net/get/php-7.0.11.tar.gz'
+Php_Ver7='php-7.4.27'
+Php_Mirror='http://cn2.php.net/get/php-7.4.27.tar.gz'
 
 Autoconf_Ver='autoconf-2.69'
 Autoconf_Mirror='http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz'
@@ -48,8 +48,8 @@ PHPMemcache_Mirror='http://pecl.php.net/get/memcache-2.2.7.tgz'
 Memcached_Ver='memcached-1.4.24'
 Memcached_Mirror='http://memcached.org/files/memcached-1.4.24.tar.gz'
 
-ImageMagick_Ver='ImageMagick-6.9.2-5'
-ImageMagick_Mirror='http://mirror.checkdomain.de/imagemagick/ImageMagick-6.9.2-5.tar.gz'
+ImageMagick_Ver='ImageMagick-6.9.12-34'
+ImageMagick_Mirror='http://mirror.checkdomain.de/imagemagick/ImageMagick-6.9.12-34.tar.gz'
 
 Imagick_Ver='imagick-3.1.2'
 Imagick_Mirror='http://pecl.php.net/get/imagick-3.1.2.tgz'
